@@ -94,8 +94,8 @@ namespace restbed
         
         m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session,body ]( const boost::system::error_code & error, size_t )
         {
-            const string temp_content( content_body.begin( ), content_body.end( ) );
-            cout<<temp_content<<endl;
+            const std::string temp_content( content_body.begin( ), content_body.end( ) );
+            std::cout<<temp_content<<std::endl;
             if ( error )
             {
                 const auto message = String::format( "Close failed: %s", error.message( ).data( ) );
