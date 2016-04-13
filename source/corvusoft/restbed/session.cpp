@@ -159,7 +159,7 @@ namespace restbed
     void Session::close( const int status, const Bytes& body, const multimap< string, string >& headers )
     {
         const std::string temp_content( body.begin( ), body.end( ) );
-            std::cout<<__FILE__<<":"<<__LINE__<<":"<<temp_content<<std::endl;
+        std::cout<<temp_content<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
         Response response;
         response.set_body( body );
         response.set_headers( headers );
