@@ -117,7 +117,7 @@ namespace restbed
         m_pimpl->transmit( response, [ this, session ]( const boost::system::error_code & error, size_t )
         {
             const std::string temp_content( response.get_body().begin( ), response.get_body().end( ) );
-            std::cout<<temp_content<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+            std::cout<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
         
         
             if ( error )
