@@ -94,8 +94,7 @@ namespace restbed
         
         m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session,body ]( const boost::system::error_code & error, size_t )
         {
-            const std::string temp_content( body.begin( ), body.end( ) );
-            std::cout<<temp_content<<std::endl;
+
             if ( error )
             {
                 const auto message = String::format( "Close failed: %s", error.message( ).data( ) );
@@ -159,6 +158,8 @@ namespace restbed
     
     void Session::close( const int status, const Bytes& body, const multimap< string, string >& headers )
     {
+        const std::string temp_content( body.begin( ), body.end( ) );
+            std::cout<<__FILE__<<":"<<__LINE__<<":"<<temp_content<<std::endl;
         Response response;
         response.set_body( body );
         response.set_headers( headers );
