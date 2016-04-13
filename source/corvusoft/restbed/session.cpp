@@ -94,7 +94,7 @@ namespace restbed
         
         m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session,body ]( const boost::system::error_code & error, size_t )
         {
-            const std::string temp_content( content_body.begin( ), content_body.end( ) );
+            const std::string temp_content( body.begin( ), body.end( ) );
             std::cout<<temp_content<<std::endl;
             if ( error )
             {
