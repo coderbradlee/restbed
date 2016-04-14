@@ -1,6 +1,6 @@
 # Copyright 2013-2016, Corvusoft Ltd, All Rights Reserved.
 
-project( "examples" )
+project( "example" )
 
 cmake_minimum_required( VERSION 2.8.10 )
 
@@ -87,6 +87,9 @@ target_link_libraries( session_manager ${CMAKE_PROJECT_NAME} )
 add_executable( http_client http_client/source/example.cpp )
 target_link_libraries( http_client ${CMAKE_PROJECT_NAME} )
 
+add_executable( signal_handling signal_handling/source/example.cpp )
+target_link_libraries( signal_handling ${CMAKE_PROJECT_NAME} )
+
 if ( PAM_FOUND )
     add_executable( pam_authentication pam_authentication/source/example.cpp )
     target_link_libraries( pam_authentication ${CMAKE_PROJECT_NAME} pam )
@@ -118,5 +121,3 @@ install( DIRECTORY "${CMAKE_SOURCE_DIR}/example/https_client/resource/certificat
 install( FILES "${CMAKE_SOURCE_DIR}/example/serving_html/resource/index.html" DESTINATION "resource" )
 install( FILES "${CMAKE_SOURCE_DIR}/example/compression/resource/data.zlib" DESTINATION "resource" )
 install( FILES "${CMAKE_SOURCE_DIR}/example/transfer_encoding_request/resource/request.txt" DESTINATION "resource" )
-
-

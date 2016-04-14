@@ -7,33 +7,32 @@ Restbed is a comprehensive and consistent programming model for building applica
 > It's akin to embedding NGINX into your companies own product line.
 >                                                       -- Solutions Architect, Bellrock Technology
 
-We love hearing about the creative ways you guys and girls use Restbed.  Why not spare a few minutes and share your [passion](https://github.com/Corvusoft/restbed/wiki).
-
 ## Features
 
 |                                                              Feature                                                                |                                           Description                                           |
 |-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------| 
-| [Comet](https://github.com/Corvusoft/restbed/blob/master/example/persistent_connection/source/example.cpp)                                                                                                                       | Long polling model to allow long-held HTTP requests for pushing data from the server to client. |
+| [Comet](https://github.com/Corvusoft/restbed/blob/master/example/persistent_connection/source/example.cpp)                          | Long polling model to allow long-held HTTP requests for pushing data from the server to client. |
 | [SSL/TLS](https://github.com/Corvusoft/restbed/blob/master/example/https_service/source/example.cpp)                                | Secure over the wire communication allowing you to transmit private data online.                |
-| [Session Management](https://github.com/Corvusoft/restbed/blob/master/example/session_manager/source/example.cpp)                                | Create custom HTTP session persistence and management logic.                |
+| [Session Management](https://github.com/Corvusoft/restbed/blob/master/example/session_manager/source/example.cpp)                   | Create custom HTTP session persistence and management logic.                                    |
 | [Path Parameters](https://github.com/Corvusoft/restbed/blob/master/example/path_parameters/source/example.cpp)                      | Annotate URIs with custom path parameters such as resource keys, revisions, etc...              |
-| Query Parameters                                                                                                                    | Automated query parameter parsing.                                                             |
+| Query Parameters                                                                                                                    | Automated query parameter parsing.                                                              |
 | [Header Filters](https://github.com/Corvusoft/restbed/blob/master/example/resource_filtering/source/example.cpp)                    | Filter incoming HTTP requests by headers.                                                       |
 | [Logging](https://github.com/Corvusoft/restbed/blob/master/example/logging/source/example.cpp)                                      | Customise how and where log entries are created.                                                |
 | [Multi-Path Resources](https://github.com/Corvusoft/restbed/blob/master/example/publishing_multipath_resources/source/example.cpp)  | Give a resource multiple paths for improved readability.                                        |
 | [Customisable Methods](https://github.com/Corvusoft/restbed/blob/master/example/custom_methods/source/example.cpp)                  | Add your own custom HTTP methods.                                                               |
 | [Compression](https://github.com/Corvusoft/restbed/blob/master/example/compression/source/example.cpp)                              | Adaptability to address any form of compression GZip, Deflate, etc...                           | 
 | Encoding                                                                                                                            | Adaptability to address any form of encoding UTF-32, ASCII, etc...                              | 
-| [Rules Engine](https://github.com/Corvusoft/restbed/blob/master/example/rules_engine/source/example.cpp)                            | Reduce complexity by processing incoming requests with readable units of code.                    |
-| [HTTP](https://github.com/Corvusoft/restbed/blob/master/example/http_client/source/example.cpp)/[HTTPS](https://github.com/Corvusoft/restbed/blob/master/example/https_client_verify_none/source/example.cpp)                                | Built in client capabilities with optional SSL peer certificate verification.                |
+| [Rules Engine](https://github.com/Corvusoft/restbed/blob/master/example/rules_engine/source/example.cpp)                            | Reduce complexity by processing incoming requests with readable units of code.                  |
+| [HTTP](https://github.com/Corvusoft/restbed/blob/master/example/http_client/source/example.cpp)/[HTTPS](https://github.com/Corvusoft/restbed/blob/master/example/https_client_verify_none/source/example.cpp)                         | Built in client capabilities with optional SSL peer certificate verification.                |
 | IPv4/IPv6                                                                                                                           | Internet Protocol Version 4/6 Network Support.                                                  |
 | Architecture                                                                                                                        | Asynchronous [single](https://github.com/Corvusoft/restbed/blob/master/example/publishing_resources/source/example.cpp) or [multi-threaded](https://github.com/Corvusoft/restbed/blob/master/example/multithreaded_service/source/example.cpp) architecture, capable of addressing the C10K problem. |
 | Converters                                                                                                                          | Built-in Path, Query, and Header conversions for string, int, long, and float data types.       |
 | [Authentication](https://github.com/Corvusoft/restbed/blob/master/example/authentication/source/example.cpp)                        | Seperate Service and/or Resource level authentication.                                          |
 | [Error Handling](https://github.com/Corvusoft/restbed/blob/master/example/error_handling/source/example.cpp)                        | Seperate Service and/or Resource level error handling.                                          |
-| [Address Binding](https://github.com/Corvusoft/restbed/blob/master/example/bind_service_address/source/example.cpp)                        | Bind HTTP and/or HTTPS services to separate IP addresses.                                         |
+| [Address Binding](https://github.com/Corvusoft/restbed/blob/master/example/bind_service_address/source/example.cpp)                 | Bind HTTP and/or HTTPS services to separate IP addresses.                                       |
+| [Signal Handling](https://github.com/Corvusoft/restbed/blob/master/example/signal_handling/source/example.cpp)                      | Capture OS generated process signals.                                                           |
 | Compliance                                                                                                                          | Flexibility to address HTTP 1.0/1.1+ compliance.                                                |
-| Mature                                                                                                                              | Secure, Stable, and extensively tested over 3+ years.                                           |
+| Mature                                                                                                                              | Secure, Stable, and extensively tested since 2013.                                              |
 | Community                                                                                                                           | Active, vibrant and energetic open source community.                                            |
 | Support                                                                                                                             | Commercial support is available from [Corvusoft](http://www.corvusoft.co.uk).                                                |
 
@@ -79,7 +78,7 @@ int main( const int, const char** )
 }
 ```
 
-More in-depth examples can be found [here](https://github.com/Corvusoft/restbed/tree/master/example).
+More in-depth examples can be found [here](https://github.com/corvusoft/restbed/tree/master/example). To see Restbed used in anger, please visit Corvusoft's [RestQ](https://github.com/corvusoft/restq) project.
 
 ## License
 
@@ -99,9 +98,6 @@ git clone --recursive https://github.com/corvusoft/restbed.git
 mkdir restbed/build
 cd restbed/build
 cmake [-DBUILD_TESTS=YES] [-DBUILD_EXAMPLES=YES] [-DBUILD_SSL=NO] [-DBUILD_SHARED=YES] [-DCMAKE_INSTALL_PREFIX=/output-directory] ..
-
-
-cmake [-DBUILD_TESTS=NO] [-DBUILD_EXAMPLES=NO] [-DBUILD_SSL=NO] [-DBUILD_SHARED=YES] ..
 make [-j CPU_CORES+1] install
 make test
 ```
@@ -111,6 +107,10 @@ You will now find all required components installed in the distribution folder.
 Please submit all enhancements, proposals, and defects via the [issue](http://github.com/corvusoft/restbed/issues) tracker; Alternatively ask a question on [StackOverflow](http://stackoverflow.com/questions/ask) tagged [#restbed](http://stackoverflow.com/questions/tagged/restbed).
 
 For Microsoft Visual Studio instructions please see feature [#17](https://github.com/Corvusoft/restbed/issues/17).
+
+## Documentation
+
+This codebase is intented to be as self documenting as possible. We have supplied many [examples](https://github.com/corvusoft/restbed/tree/master/example) and [test suites](https://github.com/corvusoft/restbed/tree/master/test) to help aid developers.  We are currently working on textual API documentation [here](https://github.com/ben-crowhurst/restbed/blob/master/DOCUMENTATION.md), however they are subject to eratice and frequent alteration; be warned.
 
 ## Minimum Requirements
 
@@ -133,18 +133,20 @@ For Microsoft Visual Studio instructions please see feature [#17](https://github
 |     [3.5](https://github.com/Corvusoft/restbed/issues?utf8=%E2%9C%93&q=milestone%3A3.5)       |      Multi-Threaded service capability          |     complete    |
 |     [3.5](https://github.com/Corvusoft/restbed/issues?utf8=%E2%9C%93&q=milestone%3A3.5)       |       Bind Service to specific Address          |     complete    |
 |     [3.5](https://github.com/Corvusoft/restbed/issues?utf8=%E2%9C%93&q=milestone%3A3.5)       |             Session Management                  |     complete    |
-|     [4.0](https://github.com/Corvusoft/restbed/milestones/4.0)       |                 HTTP Client                     |      beta       |
-|     [4.0](https://github.com/Corvusoft/restbed/milestones/4.0)       |               Signal Handling                   |   development   |
+|     [4.0](https://github.com/Corvusoft/restbed/milestones/4.0)       |                 HTTP Client                     |    complete     |
+|     [4.0](https://github.com/Corvusoft/restbed/milestones/4.0)       |               Signal Handling                   |    complete     |
+|     [4.5](https://github.com/Corvusoft/restbed/milestones/4.5)       |              API Documentation                  |   development   |
 |     [4.5](https://github.com/Corvusoft/restbed/milestones/4.5)       |                 Web Sockets                     |     pending     |
 |     [4.5](https://github.com/Corvusoft/restbed/milestones/4.5)       |         Client-side SSL certificates            |     pending     |
 |     [4.5](https://github.com/Corvusoft/restbed/milestones/4.5)       |               Resource Caching                  |     pending     |
+|     [4.5](https://github.com/Corvusoft/restbed/milestones/4.5)       |             Runtime Modifications               |     pending     |
 |     [5.0](https://github.com/Corvusoft/restbed/milestones/5.0)       |               HTTP 2 compliance                 |     pending     |
+|     [5.0](https://github.com/Corvusoft/restbed/milestones/5.0)       |            Refactor, Reduce, Reuse              |     pending     |
 
 ## Contact
 
 |     Method   |                   Description                   |
 |:--------------|:-----------------------------------------------| 
 | [Twitter](http://www.twitter.com/corvusoft)                  | Tweet us your questions & feature requests.   |
-| [Google+](https://plus.google.com/+CorvusoftCoUkSolutions)   | Join the community social circle.             |
 | support@corvusoft.co.uk                                      | Support related queries.                      |
 | sales@corvusoft.co.uk                                        | Sale related queries.                         |

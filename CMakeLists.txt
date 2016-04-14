@@ -8,9 +8,9 @@ cmake_minimum_required( VERSION 2.8.10 )
 # Build Options
 #
 option( BUILD_SHARED   "Build shared library."              OFF )
-option( BUILD_SSL      "Build Secure Socket Layer Support."  ON )
 option( BUILD_EXAMPLES "Build examples applications."       OFF )
 option( BUILD_TESTS    "Build all available test suites."   OFF )
+option( BUILD_SSL      "Build secure socket layer support."  ON )
 
 #
 # Configuration
@@ -42,7 +42,7 @@ include_directories( ${INCLUDE_DIR} )
 add_library( ${PROJECT_NAME} ${BUILD_MANIFEST} )
 
 if ( BUILD_SSL )
-    target_link_libraries( ${PROJECT_NAME} PRIVATE ${ssl_LIBRARY} ${crypto_LIBRARY} )
+    target_link_libraries( ${PROJECT_NAME} LINK_PRIVATE ${ssl_LIBRARY} ${crypto_LIBRARY} )
 else ( )
     target_link_libraries( ${PROJECT_NAME} )
 endif ( )

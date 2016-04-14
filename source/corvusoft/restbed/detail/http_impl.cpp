@@ -20,15 +20,15 @@
 #include "corvusoft/restbed/detail/request_impl.hpp"
 
 //External Includes
-#include <boost/asio/error.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/asio/buffer.hpp>
-#include <boost/asio/streambuf.hpp>
+#include <asio/error.hpp>
+#include <asio/ip/tcp.hpp>
+#include <asio/buffer.hpp>
+#include <asio/streambuf.hpp>
 
 #ifdef BUILD_SSL
-    #include <boost/asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 #endif
-using boost;
+
 //System Namespaces
 using std::bind;
 using std::stod;
@@ -48,55 +48,13 @@ using std::placeholders::_2;
 //Project Namespaces
 
 //External Namespaces
-using boost::asio::buffer;
-using boost::asio::ip::tcp;
-using boost::asio::streambuf;
-using boost::asio::io_service;
+using asio::buffer;
+using asio::ip::tcp;
+using asio::streambuf;
+using asio::io_service;
 #ifdef BUILD_SSL
-    using boost::asio::ssl::stream;
+    using asio::ssl::stream;
 #endif
-using boost::system::error_code;
-
-
-
-#include<boost/shared_ptr.hpp>
-//Project Includes
-#include "corvusoft/restbed/uri.hpp"
-#include "corvusoft/restbed/http.hpp"
-#include "corvusoft/restbed/string.hpp"
-#include "corvusoft/restbed/request.hpp"
-#include "corvusoft/restbed/response.hpp"
-#include "corvusoft/restbed/ssl_settings.hpp"
-#include "corvusoft/restbed/detail/socket_impl.hpp"
-#include "corvusoft/restbed/detail/request_impl.hpp"
-#include "corvusoft/restbed/detail/response_impl.hpp"
-
-//External Includes
-#include <boost/asio.hpp>
-
-//System Namespaces
-using std::stoi;
-using std::stod;
-using std::regex;
-using std::string;
-using std::smatch;
-using std::istream;
-using std::multimap;
-using std::to_string;
-using std::shared_ptr;
-using std::make_shared;
-using std::runtime_error;
-
-//Project Namespaces
-using restbed::detail::SocketImpl;
-using restbed::detail::RequestImpl;
-using restbed::detail::ResponseImpl;
-
-//External Namespaces
-using boost::asio::buffer;
-using boost::asio::ip::tcp;
-using namespace boost;
-
 
 namespace restbed
 {
@@ -166,7 +124,7 @@ namespace restbed
             {
                 if ( request->m_pimpl->m_io_service == nullptr )
                 {
-                    request->m_pimpl->m_io_service = make_shared< boost::asio::io_service >( );
+                    request->m_pimpl->m_io_service = make_shared< asio::io_service >( );
                 }
                 
 #ifdef BUILD_SSL
@@ -192,8 +150,8 @@ namespace restbed
 #ifdef BUILD_SSL
         void HttpImpl::ssl_socket_setup( const shared_ptr< Request >& request, const shared_ptr< const SSLSettings >& settings )
         {
-            boost::asio::ssl::context context( boost::asio::ssl::context::sslv23 );
-            shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > > socket = nullptr;
+            asio::ssl::context context( asio::ssl::context::sslv23 );
+            shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > > socket = nullptr;
             
             if ( settings not_eq nullptr )
             {
@@ -208,20 +166,20 @@ namespace restbed
                     context.add_verify_path( settings->get_certificate_authority_pool( ) );
                 }
                 
-                socket = make_shared< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
-                socket->set_verify_mode( boost::asio::ssl::verify_peer | boost::asio::ssl::verify_fail_if_no_peer_cert );
+                socket = make_shared< asio::ssl::stream< asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
+                socket->set_verify_mode( asio::ssl::verify_peer | asio::ssl::verify_fail_if_no_peer_cert );
             }
             else
             {
-                socket = make_shared< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
-                socket->set_verify_mode( boost::asio::ssl::verify_none );
+                socket = make_shared< asio::ssl::stream< asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
+                socket->set_verify_mode( asio::ssl::verify_none );
             }
             
-            socket->set_verify_callback( boost::asio::ssl::rfc2818_verification( request->get_host( ) ) );
+            socket->set_verify_callback( asio::ssl::rfc2818_verification( request->get_host( ) ) );
             request->m_pimpl->m_socket = make_shared< SocketImpl >( socket );
         }
 #endif
-        void HttpImpl::request_handler( const boost::system::error_code& error, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback   )
+        void HttpImpl::request_handler( const error_code& error, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback   )
         {
             if ( error )
             {
@@ -232,7 +190,7 @@ namespace restbed
             request->m_pimpl->m_socket->write( to_bytes( request ), bind( write_handler, _1, _2, request, callback ) );
         }
         
-        void HttpImpl::write_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::write_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
             if ( error )
             {
@@ -240,7 +198,7 @@ namespace restbed
                 return callback( request, create_error_response( request, body ) );
             }
             
-            request->m_pimpl->m_buffer = make_shared< boost::asio::streambuf >( );
+            request->m_pimpl->m_buffer = make_shared< asio::streambuf >( );
             request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, "\r\n", bind( read_status_handler, _1, _2, request, callback ) );
         }
         
@@ -258,7 +216,7 @@ namespace restbed
             return response;
         }
         
-        void HttpImpl::read_status_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::read_status_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
             if ( error )
             {
@@ -288,9 +246,9 @@ namespace restbed
             request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, "\r\n\r\n", bind( read_headers_handler, _1, _2, request, callback ) );
         }
         
-        void HttpImpl::read_headers_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::read_headers_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
-            if ( error == boost::asio::error::eof )
+            if ( error == asio::error::eof )
             {
                 return callback( request, request->m_pimpl->m_response );
             }

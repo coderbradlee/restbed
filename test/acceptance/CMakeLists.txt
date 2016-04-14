@@ -180,35 +180,35 @@ add_executable( custom_failed_resource_filter_validation_handler_acceptance_test
 target_link_libraries( custom_failed_resource_filter_validation_handler_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( custom_failed_resource_filter_validation_handler_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/custom_failed_resource_filter_validation_handler_acceptance_test_suite )
 
-add_executable( custom_method_not_allowed_handler_acceptance_test_suite ${SOURCE_DIR}/custom_method_not_allowed_handler/scenario.cpp )
+add_executable( custom_method_not_allowed_handler_acceptance_test_suite ${SOURCE_DIR}/custom_method_not_allowed_handler/feature.cpp )
 target_link_libraries( custom_method_not_allowed_handler_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( custom_method_not_allowed_handler_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/custom_method_not_allowed_handler_acceptance_test_suite )
 
-add_executable( custom_method_not_implemented_handler_acceptance_test_suite ${SOURCE_DIR}/custom_method_not_implemented_handler/scenario.cpp )
+add_executable( custom_method_not_implemented_handler_acceptance_test_suite ${SOURCE_DIR}/custom_method_not_implemented_handler/feature.cpp )
 target_link_libraries( custom_method_not_implemented_handler_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( custom_method_not_implemented_handler_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/custom_method_not_implemented_handler_acceptance_test_suite )
 
-add_executable( custom_resource_not_found_handler_acceptance_test_suite ${SOURCE_DIR}/custom_resource_not_found_handler/scenario.cpp )
+add_executable( custom_resource_not_found_handler_acceptance_test_suite ${SOURCE_DIR}/custom_resource_not_found_handler/feature.cpp )
 target_link_libraries( custom_resource_not_found_handler_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( custom_resource_not_found_handler_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/custom_resource_not_found_handler_acceptance_test_suite )
 
-add_executable( path_parameters_acceptance_test_suite ${SOURCE_DIR}/path_parameters/scenario.cpp )
+add_executable( path_parameters_acceptance_test_suite ${SOURCE_DIR}/path_parameters/feature.cpp )
 target_link_libraries( path_parameters_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( path_parameters_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/path_parameters_acceptance_test_suite )
 
-add_executable( query_parameters_acceptance_test_suite ${SOURCE_DIR}/query_parameters/scenario.cpp )
+add_executable( query_parameters_acceptance_test_suite ${SOURCE_DIR}/query_parameters/feature.cpp )
 target_link_libraries( query_parameters_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( query_parameters_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/query_parameters_acceptance_test_suite )
 
-add_executable( resource_method_filters_acceptance_test_suite ${SOURCE_DIR}/resource_method_filters/scenario.cpp )
+add_executable( resource_method_filters_acceptance_test_suite ${SOURCE_DIR}/resource_method_filters/feature.cpp )
 target_link_libraries( resource_method_filters_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( resource_method_filters_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/resource_method_filters_acceptance_test_suite )
 
-add_executable( runtime_service_modifications_acceptance_test_suite ${SOURCE_DIR}/runtime_service_modifications/scenario.cpp )
+add_executable( runtime_service_modifications_acceptance_test_suite ${SOURCE_DIR}/runtime_service_modifications/feature.cpp )
 target_link_libraries( runtime_service_modifications_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( runtime_service_modifications_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/runtime_service_modifications_acceptance_test_suite )
 
-add_executable( publish_duplicate_resources_acceptance_test_suite ${SOURCE_DIR}/publish_duplicate_resources/scenario.cpp )
+add_executable( publish_duplicate_resources_acceptance_test_suite ${SOURCE_DIR}/publish_duplicate_resources/feature.cpp )
 target_link_libraries( publish_duplicate_resources_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( publish_duplicate_resources_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/publish_duplicate_resources_acceptance_test_suite )
 
@@ -239,3 +239,39 @@ add_test( resource_rules_engine_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/
 add_executable( mixed_rules_engine_acceptance_test_suite ${SOURCE_DIR}/rules_engine/mixed.cpp )
 target_link_libraries( mixed_rules_engine_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
 add_test( mixed_rules_engine_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/mixed_rules_engine_acceptance_test_suite )
+
+add_executable( http_client_connect_acceptance_test_suite ${SOURCE_DIR}/http_client/connect.cpp )
+target_link_libraries( http_client_connect_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( http_client_connect_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/http_client_connect_acceptance_test_suite )
+
+add_executable( http_client_fetch_acceptance_test_suite ${SOURCE_DIR}/http_client/fetch.cpp )
+target_link_libraries( http_client_fetch_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( http_client_fetch_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/http_client_fetch_acceptance_test_suite )
+
+add_executable( http_client_close_acceptance_test_suite ${SOURCE_DIR}/http_client/close.cpp )
+target_link_libraries( http_client_close_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( http_client_close_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/http_client_close_acceptance_test_suite )
+
+add_executable( http_client_async_acceptance_test_suite ${SOURCE_DIR}/http_client/async.cpp )
+target_link_libraries( http_client_async_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( http_client_async_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/http_client_async_acceptance_test_suite )
+
+add_executable( http_client_keep_alive_acceptance_test_suite ${SOURCE_DIR}/http_client/keep_alive.cpp )
+target_link_libraries( http_client_keep_alive_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( http_client_keep_alive_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/http_client_keep_alive_acceptance_test_suite )
+
+add_executable( custom_status_message_acceptance_test_suite ${SOURCE_DIR}/custom_status_message/feature.cpp )
+target_link_libraries( custom_status_message_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( custom_status_message_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/custom_status_message_acceptance_test_suite )
+
+add_executable( signal_handling_acceptance_test_suite ${SOURCE_DIR}/signal_handling/feature.cpp )
+target_link_libraries( signal_handling_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( signal_handling_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/signal_handling_acceptance_test_suite )
+
+add_executable( service_connection_timeout_acceptance_test_suite ${SOURCE_DIR}/connection_timeout/server.cpp )
+target_link_libraries( service_connection_timeout_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( service_connection_timeout_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/service_connection_timeout_acceptance_test_suite )
+
+add_executable( client_connection_timeout_acceptance_test_suite ${SOURCE_DIR}/connection_timeout/client.cpp )
+target_link_libraries( client_connection_timeout_acceptance_test_suite ${CMAKE_PROJECT_NAME} )
+add_test( client_connection_timeout_acceptance_test_suite ${EXECUTABLE_OUTPUT_PATH}/client_connection_timeout_acceptance_test_suite )

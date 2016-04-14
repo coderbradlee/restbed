@@ -26,11 +26,11 @@
 #include "corvusoft/restbed/detail/resource_impl.hpp"
 
 //External Includes
-#include <boost/asio/io_service.hpp>
-#include <boost/asio/steady_timer.hpp>
+#include <asio/io_service.hpp>
+#include <asio/steady_timer.hpp>
 
 #ifdef BUILD_SSL
-    #include <boost/asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -54,8 +54,8 @@ using std::chrono::milliseconds;
 using restbed::detail::ServiceImpl;
 
 //External Namespaces
-using boost::asio::io_service;
-using boost::asio::steady_timer;
+using asio::io_service;
+using asio::steady_timer;
 
 namespace restbed
 {
@@ -297,7 +297,7 @@ namespace restbed
         
         auto timer = make_shared< steady_timer >( *m_pimpl->m_io_service );
         timer->expires_from_now( interval );
-        timer->async_wait( [ this, task, interval, timer ]( const boost::system::error_code& )
+        timer->async_wait( [ this, task, interval, timer ]( const error_code& )
         {
             task( );
             schedule( task, interval );

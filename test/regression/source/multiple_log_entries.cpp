@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014, 2015 Corvusoft
+ * Copyright 2013-2016, Corvusoft Ltd, All Rights Reserved.
  */
 
 //System Includes
@@ -37,6 +37,11 @@ using namespace restbed;
 class CustomLogger : public Logger
 {
     public:
+        CustomLogger( void ) : actual( )
+        {
+            return;
+        }
+        
         void stop( void )
         {
             return;
@@ -127,11 +132,9 @@ TEST_CASE( "multiple log entries", "[service]" )
             REQUIRE( regex_match( logger->actual[ 0 ], regex( "^Service accepting HTTP connections at '.*'\\.$" ) ) );
             REQUIRE( regex_match( logger->actual[ 1 ], regex( "^Resource published on route '/resource_one'\\.$" ) ) );
             REQUIRE( regex_match( logger->actual[ 2 ], regex( "^Resource published on route '/resource_two'\\.$" ) ) );
-            REQUIRE( regex_match( logger->actual[ 3 ], regex( "^Failed to set socket option, send timeout\\.$" ) ) );
-            REQUIRE( regex_match( logger->actual[ 4 ], regex( "^Failed to set socket option, receive timeout\\.$" ) ) );
-            REQUIRE( regex_match( logger->actual[ 5 ], regex( "^Incoming 'GET' request from '.*' for route '/resource_two'\\.$" ) ) );
+            REQUIRE( regex_match( logger->actual[ 3 ], regex( "^Incoming 'GET' request from '.*' for route '/resource_two'\\.$" ) ) );
             
-            REQUIRE( 6 == logger->actual.size( ) );
+            REQUIRE( 4 == logger->actual.size( ) );
             
             service.stop( );
         } );
