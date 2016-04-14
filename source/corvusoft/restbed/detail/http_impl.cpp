@@ -55,7 +55,7 @@ using boost::asio::io_service;
 #ifdef BUILD_SSL
     using boost::asio::ssl::stream;
 #endif
-
+using boost::system::error_code;
 namespace restbed
 {
     namespace detail
