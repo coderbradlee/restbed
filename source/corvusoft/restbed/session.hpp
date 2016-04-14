@@ -12,12 +12,12 @@
 #include <string>
 #include <memory>
 #include <functional>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 #include <corvusoft/restbed/byte.hpp>
 #include <corvusoft/restbed/string.hpp>
 #include <corvusoft/restbed/context_value.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+
 //External Includes
 
 //System Namespaces
@@ -95,13 +95,11 @@ namespace restbed
             
             void yield( const int status, const std::string& body, const std::multimap< std::string, std::string >& headers, const std::function< void ( const std::shared_ptr< Session > ) >& callback = nullptr );
             
-            void fetch( const std::function< void ( const std::shared_ptr< Session > ) >& callback );
-            
             void fetch( const std::size_t length, const std::function< void ( const std::shared_ptr< Session >, const Bytes& ) >& callback );
             
             void fetch( const std::string& delimiter, const std::function< void ( const std::shared_ptr< Session >, const Bytes& ) >& callback );
             
-            void sleep_for( const boost::posix_time::milliseconds& delay, const std::function< void ( const std::shared_ptr< Session > ) >& callback );
+            void sleep_for( const std::chrono::milliseconds& delay, const std::function< void ( const std::shared_ptr< Session > ) >& callback );
             
             //Getters
             const std::string& get_id( void ) const;

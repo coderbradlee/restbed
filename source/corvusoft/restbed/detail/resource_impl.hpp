@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 
 //External Includes

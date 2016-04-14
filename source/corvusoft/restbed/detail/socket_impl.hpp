@@ -11,14 +11,18 @@
 #include <memory>
 #include <cstdint>
 #include <functional>
+#include <system_error>
 
 //Project Includes
 #include "corvusoft/restbed/byte.hpp"
-#include <boost/date_time/posix_time/posix_time.hpp>
+
 //External Includes
-#include <boost/asio.hpp>
+#include <asio/ip/tcp.hpp>
+#include <asio/streambuf.hpp>
+#include <asio/steady_timer.hpp>
+
 #ifdef BUILD_SSL
-    #include <boost/asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -31,7 +35,6 @@ namespace restbed
 {
     //Forward Declarations
     class Logger;
-    class Session;
     
     namespace detail
     {
@@ -45,9 +48,9 @@ namespace restbed
                 //Definitions
                 
                 //Constructors
-                SocketImpl( const std::shared_ptr< boost::asio::ip::tcp::socket >& socket, const std::shared_ptr< Logger >& logger = nullptr );
+                SocketImpl( const std::shared_ptr< asio::ip::tcp::socket >& socket, const std::shared_ptr< Logger >& logger = nullptr );
 #ifdef BUILD_SSL
-                SocketImpl( const std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >& socket, const std::shared_ptr< Logger >& logger = nullptr );
+                SocketImpl( const std::shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > >& socket, const std::shared_ptr< Logger >& logger = nullptr );
 #endif
                 virtual ~SocketImpl( void );
                 
@@ -58,29 +61,27 @@ namespace restbed
                 
                 bool is_closed( void ) const;
                 
-                void connect(  const std::string& hostname, const uint16_t port, boost::system::error_code& error );
+                void connect(  const std::string& hostname, const uint16_t port, const std::function< void ( const std::error_code& ) >& callback );
                 
-				void sleep_for(const boost::posix_time::milliseconds& delay, const std::function< void(const boost::system::error_code&) >& callback);
+                void sleep_for( const std::chrono::milliseconds& delay, const std::function< void ( const std::error_code& ) >& callback );
                 
-                size_t write( const Bytes& data, boost::system::error_code& error );
+                void write( const Bytes& data, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
                 
-                void write( const Bytes& data, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
+                size_t read( const std::shared_ptr< asio::streambuf >& data, const std::size_t length, std::error_code& error );
                 
-                size_t read( const std::shared_ptr< boost::asio::streambuf >& data, const std::size_t length, boost::system::error_code& error );
+                void read( const std::shared_ptr< asio::streambuf >& data, const std::size_t length, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
                 
-                void read( const std::shared_ptr< boost::asio::streambuf >& data, const std::size_t length, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
+                size_t read( const std::shared_ptr< asio::streambuf >& data, const std::string& delimiter, std::error_code& error );
                 
-                size_t read( const std::shared_ptr< boost::asio::streambuf >& data, const std::string& delimiter, boost::system::error_code& error );
-                
-                void read( const std::shared_ptr< boost::asio::streambuf >& data, const std::string& delimiter, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
+                void read( const std::shared_ptr< asio::streambuf >& data, const std::string& delimiter, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
                 
                 //Getters
-                std::string get_local_endpoint( void ) const;
+                std::string get_local_endpoint( void );
                 
-                std::string get_remote_endpoint( void ) const;
+                std::string get_remote_endpoint( void );
                 
                 //Setters
-				void set_timeout(const boost::posix_time::milliseconds& value);
+                void set_timeout( const std::chrono::milliseconds& value );
                 
                 //Operators
                 
@@ -112,6 +113,7 @@ namespace restbed
                 SocketImpl( const SocketImpl& original ) = delete;
                 
                 //Functionality
+                void connection_timeout_handler( const std::error_code& error );
                 
                 //Getters
                 
@@ -123,13 +125,19 @@ namespace restbed
                 //Properties
                 bool m_is_open;
                 
+                std::shared_ptr< Bytes > m_buffer;
+                
                 std::shared_ptr< Logger > m_logger;
                 
-				std::shared_ptr< boost::asio::deadline_timer > m_timer;
+                std::chrono::milliseconds m_timeout;
                 
-                std::shared_ptr< boost::asio::ip::tcp::socket > m_socket;
+                std::shared_ptr< asio::steady_timer > m_timer;
+                
+                std::shared_ptr< asio::ip::tcp::resolver > m_resolver;
+                
+                std::shared_ptr< asio::ip::tcp::socket > m_socket;
 #ifdef BUILD_SSL
-                std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > > m_ssl_socket;
+                std::shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > > m_ssl_socket;
 #endif
         };
     }

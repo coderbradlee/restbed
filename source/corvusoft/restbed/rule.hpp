@@ -8,7 +8,7 @@
 //System Includes
 #include <memory>
 #include <functional>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 
 //External Includes

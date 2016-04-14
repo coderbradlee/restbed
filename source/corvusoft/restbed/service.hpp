@@ -12,8 +12,7 @@
 #include <string>
 #include <stdexcept>
 #include <functional>
-#include<boost/shared_ptr.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+
 //Project Includes
 
 //External Includes
@@ -27,6 +26,7 @@
 namespace restbed
 {
     //Forward Declarations
+    class Uri;
     class Rule;
     class Logger;
     class Session;
@@ -66,9 +66,12 @@ namespace restbed
             
             void suppress( const std::shared_ptr< const Resource >& resource );
             
-			void schedule(const std::function< void(void) >& task, const boost::posix_time::milliseconds& interval = boost::posix_time::milliseconds(0));
+            void schedule( const std::function< void ( void ) >& task, const std::chrono::milliseconds& interval = std::chrono::milliseconds::zero( ) );
             
             //Getters
+            const std::shared_ptr< const Uri > get_http_uri( void ) const;
+            
+            const std::shared_ptr< const Uri > get_https_uri( void ) const;
             
             //Setters
             void set_logger( const std::shared_ptr< Logger >& value );
@@ -76,6 +79,8 @@ namespace restbed
             void set_session_manager( const std::shared_ptr< SessionManager >& value );
             
             void set_ready_handler( const std::function< void ( Service& ) >& value );
+            
+            void set_signal_handler( const int signal, const std::function< void ( const int ) >& value );
             
             void set_not_found_handler( const std::function< void ( const std::shared_ptr< Session > ) >& value );
             
@@ -85,7 +90,7 @@ namespace restbed
             
             void set_failed_filter_validation_handler( const std::function< void ( const std::shared_ptr< Session > ) >& value );
             
-            void set_error_handler( std::function< void ( const int, const std::exception&, const std::shared_ptr< Session > ) > value );
+            void set_error_handler( const std::function< void ( const int, const std::exception&, const std::shared_ptr< Session > ) >& value );
             
             void set_authentication_handler( const std::function< void ( const std::shared_ptr< Session >, const std::function< void ( const std::shared_ptr< Session > ) >& ) >& value );
             

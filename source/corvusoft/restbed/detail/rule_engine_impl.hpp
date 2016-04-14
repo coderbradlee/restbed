@@ -9,10 +9,8 @@
 #include <vector>
 #include <memory>
 #include <cstddef>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
-#include "corvusoft/restbed/rule.hpp"
-#include "corvusoft/restbed/session.hpp"
 
 //External Includes
 
@@ -24,8 +22,14 @@
 
 namespace restbed
 {
+    //Forward Declarations
+    class Rule;
+    class Session;
+    
     namespace detail
     {
+        //Forward Declarations
+        
         static void rule_engine( const std::shared_ptr< Session > session,
                                  const std::vector< std::shared_ptr< Rule > >& rules,
                                  const std::function< void ( const std::shared_ptr< Session > ) >& callback,
@@ -38,7 +42,7 @@ namespace restbed
                 
                 if ( rule->condition( session ) )
                 {
-                    rule->action( session, std::bind( rule_engine, session, rules, callback, index ) );
+                    rule->action( session, bind( rule_engine, session, rules, callback, index ) );
                     return;
                 }
             }

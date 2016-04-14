@@ -10,12 +10,13 @@
 #include <string>
 #include <memory>
 #include <cstdint>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 #include <corvusoft/restbed/byte.hpp>
 
 //External Includes
-#include <boost/asio.hpp>
+#include <asio/streambuf.hpp>
+#include <asio/io_service.hpp>
 
 //System Namespaces
 
@@ -42,8 +43,6 @@ namespace restbed
             
             double m_version = 1.1;
             
-            bool m_is_https = false;
-            
             std::string m_host = "";
             
             std::string m_path = "/";
@@ -54,7 +53,7 @@ namespace restbed
             
             std::shared_ptr< Uri > m_uri = nullptr;
             
-            std::shared_ptr< const Response > m_response = nullptr;
+            std::shared_ptr< Response > m_response = nullptr;
             
             std::multimap< std::string, std::string > m_headers { };
             
@@ -64,9 +63,9 @@ namespace restbed
             
             std::shared_ptr< SocketImpl > m_socket = nullptr;
             
-            std::shared_ptr< boost::asio::streambuf > m_buffer = nullptr;
+            std::shared_ptr< asio::streambuf > m_buffer = nullptr;
             
-            std::shared_ptr< boost::asio::io_service > m_io_service = nullptr;
+            std::shared_ptr< asio::io_service > m_io_service = nullptr;
         };
     }
 }

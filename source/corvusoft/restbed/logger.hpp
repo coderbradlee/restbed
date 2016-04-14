@@ -6,13 +6,13 @@
 #define _RESTBED_LOGGER_H 1
 
 #if defined(WIN32)
-#undef ERROR
+    #undef ERROR
 #endif
 
 //System Includes
 #include <string>
 #include <memory>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 
 //External Includes

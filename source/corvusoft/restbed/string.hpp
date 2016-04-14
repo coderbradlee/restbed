@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 #include <cstdarg>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 #include <corvusoft/restbed/byte.hpp>
 

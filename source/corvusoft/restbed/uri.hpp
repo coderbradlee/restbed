@@ -9,7 +9,7 @@
 #include <map>
 #include <string>
 #include <cstdint>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 #include <corvusoft/restbed/byte.hpp>
 

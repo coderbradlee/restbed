@@ -11,8 +11,9 @@
 #include <stdexcept>
 #include <algorithm>
 #include <functional>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
+#include "corvusoft/restbed/uri.hpp"
 #include "corvusoft/restbed/rule.hpp"
 #include "corvusoft/restbed/logger.hpp"
 #include "corvusoft/restbed/service.hpp"
@@ -25,9 +26,11 @@
 #include "corvusoft/restbed/detail/resource_impl.hpp"
 
 //External Includes
-#include <boost/asio.hpp>
+#include <asio/io_service.hpp>
+#include <asio/steady_timer.hpp>
+
 #ifdef BUILD_SSL
-    #include <boost/asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -40,17 +43,19 @@ using std::function;
 using std::exception;
 using std::to_string;
 using std::shared_ptr;
+using std::error_code;
 using std::make_shared;
 using std::stable_sort;
 using std::runtime_error;
 using std::invalid_argument;
-using boost::posix_time::milliseconds;
+using std::chrono::milliseconds;
 
 //Project Namespaces
 using restbed::detail::ServiceImpl;
 
 //External Namespaces
-using boost::asio::io_service;
+using asio::io_service;
+using asio::steady_timer;
 
 namespace restbed
 {
@@ -67,7 +72,7 @@ namespace restbed
         }
         catch ( ... )
         {
-            m_pimpl->log( Logger::Level::WARNING, "Service failed graceful teardown." );
+            m_pimpl->log( Logger::WARNING, "Service failed graceful wind down." );
         }
         
         delete m_pimpl;
@@ -94,40 +99,48 @@ namespace restbed
         
         m_pimpl->m_workers.clear( );
         
-        m_pimpl->log( Logger::Level::INFO, String::format( "Service halted." ) );
-        
         if ( m_pimpl->m_logger not_eq nullptr )
         {
+            m_pimpl->log( Logger::INFO, "Service halted." );
             m_pimpl->m_logger->stop( );
         }
     }
     
-    void Service::start( const std::shared_ptr< const Settings >& settings )
+    void Service::start( const shared_ptr< const Settings >& settings )
     {
+        m_pimpl->setup_signal_handler( );
+        
         m_pimpl->m_settings = settings;
         
         if ( m_pimpl->m_settings == nullptr )
         {
-            m_pimpl->m_settings = std::make_shared< Settings >( );
+            m_pimpl->m_settings = make_shared< Settings >( );
         }
         
 #ifdef BUILD_SSL
         m_pimpl->m_ssl_settings = m_pimpl->m_settings->get_ssl_settings( );
-#endif
+#else
         
-        if ( m_pimpl->m_session_manager == nullptr )
+        if ( m_pimpl->m_settings->get_ssl_settings( ) not_eq nullptr )
         {
-            m_pimpl->m_session_manager = std::make_shared< SessionManager >( );
+            throw runtime_error( "Not Implemented! Rebuild Restbed with SSL funcationality enabled." );
         }
         
-        m_pimpl->m_session_manager->start( m_pimpl->m_settings );
+#endif
         
         if ( m_pimpl->m_logger not_eq nullptr )
         {
             m_pimpl->m_logger->start( m_pimpl->m_settings );
         }
         
-        stable_sort( m_pimpl->m_rules.begin( ), m_pimpl->m_rules.end( ), [ ]( const std::shared_ptr< const Rule >& lhs, const std::shared_ptr< const Rule >& rhs )
+        if ( m_pimpl->m_session_manager == nullptr )
+        {
+            m_pimpl->m_session_manager = make_shared< SessionManager >( );
+        }
+        
+        m_pimpl->m_session_manager->start( m_pimpl->m_settings );
+        
+        stable_sort( m_pimpl->m_rules.begin( ), m_pimpl->m_rules.end( ), [ ]( const shared_ptr< const Rule >& lhs, const shared_ptr< const Rule >& rhs )
         {
             return lhs->get_priority( ) < rhs->get_priority( );
         } );
@@ -142,7 +155,7 @@ namespace restbed
             auto path = String::format( "/%s/%s", m_pimpl->m_settings->get_root( ).data( ), route.second.data( ) );
             path = String::replace( "//", "/", path );
             
-            m_pimpl->log( Logger::Level::INFO, String::format( "Resource published on route '%s'.", path.data( ) ) );
+            m_pimpl->log( Logger::INFO, String::format( "Resource published on route '%s'.", path.data( ) ) );
         }
         
         if ( m_pimpl->m_ready_handler not_eq nullptr )
@@ -160,7 +173,7 @@ namespace restbed
             
             for ( unsigned int count = 0;  count < limit; count++ )
             {
-                auto worker = std::make_shared< thread >( [ this ]( )
+                auto worker = make_shared< thread >( [ this ]( )
                 {
                     m_pimpl->m_io_service->run( );
                 } );
@@ -172,7 +185,7 @@ namespace restbed
         m_pimpl->m_io_service->run( );
     }
     
-    void Service::restart( const std::shared_ptr< const Settings >& settings )
+    void Service::restart( const shared_ptr< const Settings >& settings )
     {
         try
         {
@@ -180,34 +193,40 @@ namespace restbed
         }
         catch ( ... )
         {
-            m_pimpl->log( Logger::Level::WARNING, "Service failed graceful teardown." );
+            m_pimpl->log( Logger::WARNING, "Service failed graceful reboot." );
         }
         
         start( settings );
     }
     
-    void Service::add_rule( const std::shared_ptr< Rule >& rule )
+    void Service::add_rule( const shared_ptr< Rule >& rule )
     {
         if ( m_pimpl->m_is_running )
         {
             throw runtime_error( "Runtime modifications of the service are prohibited." );
         }
         
-        m_pimpl->m_rules.push_back( rule );
+        if ( rule not_eq nullptr )
+        {
+            m_pimpl->m_rules.push_back( rule );
+        }
     }
     
-    void Service::add_rule( const std::shared_ptr< Rule >& rule, const int priority )
+    void Service::add_rule( const shared_ptr< Rule >& rule, const int priority )
     {
         if ( m_pimpl->m_is_running )
         {
             throw runtime_error( "Runtime modifications of the service are prohibited." );
         }
         
-        rule->set_priority( priority );
-        m_pimpl->m_rules.push_back( rule );
+        if ( rule not_eq nullptr )
+        {
+            rule->set_priority( priority );
+            m_pimpl->m_rules.push_back( rule );
+        }
     }
     
-    void Service::publish( const std::shared_ptr< const Resource >& resource )
+    void Service::publish( const shared_ptr< const Resource >& resource )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -238,7 +257,7 @@ namespace restbed
         m_pimpl->m_supported_methods.insert( methods.begin( ), methods.end( ) );
     }
     
-    void Service::suppress( const std::shared_ptr< const Resource >& resource )
+    void Service::suppress( const shared_ptr< const Resource >& resource )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -254,33 +273,48 @@ namespace restbed
         {
             if ( m_pimpl->m_resource_routes.erase( path ) )
             {
-                m_pimpl->log( Logger::Level::INFO, String::format( "Suppressed resource route '%s'.", path.data( ) ) );
+                m_pimpl->log( Logger::INFO, String::format( "Suppressed resource route '%s'.", path.data( ) ) );
             }
             else
             {
-                m_pimpl->log( Logger::Level::WARNING, String::format( "Failed to suppress resource route '%s'; Not Found!", path.data( ) ) );
+                m_pimpl->log( Logger::WARNING, String::format( "Failed to suppress resource route '%s'; Not Found!", path.data( ) ) );
             }
         }
     }
     
-	void Service::schedule(const function< void(void) >& task, const boost::posix_time::milliseconds& interval)
+    void Service::schedule( const function< void ( void ) >& task, const milliseconds& interval )
     {
-		if (interval == boost::posix_time::milliseconds(0))
+        if ( task == nullptr )
+        {
+            return;
+        }
+        
+        if ( interval == milliseconds::zero( ) )
         {
             m_pimpl->m_io_service->post( task );
             return;
         }
         
-        auto timer = std::make_shared< boost::asio::deadline_timer >( *m_pimpl->m_io_service );
+        auto timer = make_shared< steady_timer >( *m_pimpl->m_io_service );
         timer->expires_from_now( interval );
-        timer->async_wait( [ this, task, interval, timer ]( const boost::system::error_code& )
+        timer->async_wait( [ this, task, interval, timer ]( const error_code& )
         {
             task( );
             schedule( task, interval );
         } );
     }
     
-    void Service::set_logger( const std::shared_ptr< Logger >& value )
+    const shared_ptr< const Uri > Service::get_http_uri( void ) const
+    {
+        return m_pimpl->get_http_uri( );
+    }
+    
+    const shared_ptr< const Uri > Service::get_https_uri( void ) const
+    {
+        return m_pimpl->get_https_uri( );
+    }
+    
+    void Service::set_logger( const shared_ptr< Logger >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -290,7 +324,7 @@ namespace restbed
         m_pimpl->m_logger = value;
     }
     
-    void Service::set_session_manager( const std::shared_ptr< SessionManager >& value )
+    void Service::set_session_manager( const shared_ptr< SessionManager >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -307,10 +341,26 @@ namespace restbed
             throw runtime_error( "Runtime modifications of the service are prohibited." );
         }
         
-        m_pimpl->m_ready_handler = std::bind( value, std::ref( *this ) );
+        if ( value not_eq nullptr )
+        {
+            m_pimpl->m_ready_handler = bind( value, std::ref( *this ) );
+        }
     }
     
-    void Service::set_not_found_handler( const function< void ( const std::shared_ptr< Session > ) >& value )
+    void Service::set_signal_handler( const int signal, const function< void ( const int ) >& value )
+    {
+        if ( m_pimpl->m_is_running )
+        {
+            throw runtime_error( "Runtime modifications of the service are prohibited." );
+        }
+        
+        if ( value not_eq nullptr )
+        {
+            m_pimpl->m_signal_handlers[ signal ] = value;
+        }
+    }
+    
+    void Service::set_not_found_handler( const function< void ( const shared_ptr< Session > ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -320,7 +370,7 @@ namespace restbed
         m_pimpl->m_not_found_handler = value;
     }
     
-    void Service::set_method_not_allowed_handler( const function< void ( const std::shared_ptr< Session > ) >& value )
+    void Service::set_method_not_allowed_handler( const function< void ( const shared_ptr< Session > ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -330,7 +380,7 @@ namespace restbed
         m_pimpl->m_method_not_allowed_handler = value;
     }
     
-    void Service::set_method_not_implemented_handler( const function< void ( const std::shared_ptr< Session > ) >& value )
+    void Service::set_method_not_implemented_handler( const function< void ( const shared_ptr< Session > ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -340,7 +390,7 @@ namespace restbed
         m_pimpl->m_method_not_implemented_handler = value;
     }
     
-    void Service::set_failed_filter_validation_handler( const function< void ( const std::shared_ptr< Session > ) >& value )
+    void Service::set_failed_filter_validation_handler( const function< void ( const shared_ptr< Session > ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {
@@ -350,17 +400,22 @@ namespace restbed
         m_pimpl->m_failed_filter_validation_handler = value;
     }
     
-    void Service::set_error_handler( function< void ( const int, const exception&, const std::shared_ptr< Session > ) > value )
+    void Service::set_error_handler( const function< void ( const int, const exception&, const shared_ptr< Session > ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {
             throw runtime_error( "Runtime modifications of the service are prohibited." );
         }
         
+        if ( value == nullptr )
+        {
+            m_pimpl->m_error_handler = ServiceImpl::default_error_handler;
+        }
+        
         m_pimpl->m_error_handler = value;
     }
     
-    void Service::set_authentication_handler( const function< void ( const std::shared_ptr< Session >, const function< void ( const std::shared_ptr< Session > ) >& ) >& value )
+    void Service::set_authentication_handler( const function< void ( const shared_ptr< Session >, const function< void ( const shared_ptr< Session > ) >& ) >& value )
     {
         if ( m_pimpl->m_is_running )
         {

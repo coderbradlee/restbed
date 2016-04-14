@@ -3,214 +3,236 @@
  */
 
 //System Includes
-#include <map>
-#include <regex>
 #include <memory>
 #include <string>
-#include <vector>
 #include <ciso646>
 #include <cstdint>
 #include <stdexcept>
-#include <algorithm>
-#include<boost/shared_ptr.hpp>
+#include <system_error>
+
 //Project Includes
 #include "corvusoft/restbed/uri.hpp"
 #include "corvusoft/restbed/http.hpp"
 #include "corvusoft/restbed/string.hpp"
 #include "corvusoft/restbed/request.hpp"
 #include "corvusoft/restbed/response.hpp"
+#include "corvusoft/restbed/settings.hpp"
 #include "corvusoft/restbed/ssl_settings.hpp"
+#include "corvusoft/restbed/detail/http_impl.hpp"
 #include "corvusoft/restbed/detail/socket_impl.hpp"
 #include "corvusoft/restbed/detail/request_impl.hpp"
 #include "corvusoft/restbed/detail/response_impl.hpp"
 
 //External Includes
-#include <boost/asio.hpp>
+#include <asio/error.hpp>
+#include <asio/buffer.hpp>
 
 //System Namespaces
-using std::stoi;
-using std::stod;
-using std::regex;
+using std::bind;
 using std::string;
-using std::smatch;
-using std::istream;
-using std::multimap;
-using std::to_string;
+using std::future;
+using std::function;
+using std::error_code;
 using std::shared_ptr;
 using std::make_shared;
 using std::runtime_error;
+using std::invalid_argument;
+using std::placeholders::_1;
+using std::placeholders::_2;
 
 //Project Namespaces
+using restbed::detail::HttpImpl;
 using restbed::detail::SocketImpl;
 using restbed::detail::RequestImpl;
 using restbed::detail::ResponseImpl;
 
 //External Namespaces
-using boost::asio::buffer;
-using boost::asio::ip::tcp;
-using namespace boost;
+using asio::buffer;
+
 namespace restbed
 {
-#ifdef BUILD_SSL
-    std::shared_ptr< const Response > Http::sync( const std::shared_ptr<const Request>& request, const std::shared_ptr< const SSLSettings >& ssl_settings )
-#else
-    std::shared_ptr< const Response > Http::sync( const std::shared_ptr<const Request>& request )
-#endif
+    Bytes Http::to_bytes( const shared_ptr< Request >& request )
     {
-        boost::system::error_code error;
+        return HttpImpl::to_bytes( request );
+    }
+    
+    Bytes Http::to_bytes( const shared_ptr< Response >& response )
+    {
+        auto data = String::format( "%s/%.1f %i %s\r\n",
+                                    response->get_protocol( ).data( ),
+                                    response->get_version( ),
+                                    response->get_status_code( ),
+                                    response->get_status_message( ).data( ) );
+                                    
+        auto headers = response->get_headers( );
         
-        if ( request->m_pimpl->m_io_service == nullptr )
+        if ( not headers.empty( ) )
         {
-            request->m_pimpl->m_io_service = std::make_shared< boost::asio::io_service >( );
+            data += String::join( headers, ": ", "\r\n" ) + "\r\n";
         }
         
-        if ( request->m_pimpl->m_socket == nullptr )
-        {
-#ifdef BUILD_SSL
+        data += "\r\n";
         
-            if ( ssl_settings not_eq nullptr or request->m_pimpl->m_is_https )
-            {
-                boost::asio::ssl::context context( boost::asio::ssl::context::sslv23 );
-                std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > > socket = nullptr;
-                
-                if ( ssl_settings not_eq nullptr )
-                {
-                    const auto pool = ssl_settings->get_certificate_authority_pool( );
-                    
-                    if ( pool.empty( ) )
-                    {
-                        context.set_default_verify_paths( );
-                    }
-                    else
-                    {
-                        context.add_verify_path( ssl_settings->get_certificate_authority_pool( ) );
-                    }
-                    
-                    socket = std::make_shared< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
-                    socket->set_verify_mode( boost::asio::ssl::verify_peer | boost::asio::ssl::verify_fail_if_no_peer_cert );
-                }
-                else
-                {
-                    socket = std::make_shared< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >( *request->m_pimpl->m_io_service, context );
-                    socket->set_verify_mode( boost::asio::ssl::verify_none );
-                }
-                
-                socket->set_verify_callback( boost::asio::ssl::rfc2818_verification( request->get_host( ) ) );
-                
-                request->m_pimpl->m_socket = std::make_shared< SocketImpl >( socket );
-            }
-            else
-            {
+        auto bytes = String::to_bytes( data );
+        auto body = response->get_body( );
+        
+        if ( not body.empty( ) )
+        {
+            bytes.insert( bytes.end( ), body.begin( ), body.end( ) );
+        }
+        
+        return bytes;
+    }
+    
+    void Http::close( const shared_ptr< Request >& request )
+    {
+        if ( request not_eq nullptr and request->m_pimpl->m_socket not_eq nullptr )
+        {
+            request->m_pimpl->m_socket->close( );
+        }
+    }
+    
+    void Http::close( const shared_ptr< Response >& response )
+    {
+        if ( response not_eq nullptr )
+        {
+            close( response->m_pimpl->m_request.lock( ) );
+        }
+    }
+    
+    bool Http::is_open( const shared_ptr< Request >& request )
+    {
+        if ( request not_eq nullptr and request->m_pimpl->m_socket not_eq nullptr )
+        {
+            return request->m_pimpl->m_socket->is_open( );
+        }
+        
+        return false;
+    }
+    
+    bool Http::is_open( const shared_ptr< Response >& response )
+    {
+        if ( response not_eq nullptr )
+        {
+            return is_open( response->m_pimpl->m_request.lock( ) );
+        }
+        
+        return false;
+    }
+    
+    bool Http::is_closed( const shared_ptr< Request >& request )
+    {
+        return not is_open( request );
+    }
+    
+    bool Http::is_closed( const shared_ptr< Response >& response )
+    {
+        return not is_open( response );
+    }
+    
+    const shared_ptr< Response > Http::sync( const shared_ptr< Request >& request, const shared_ptr< const Settings >& settings )
+    {
+        static const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) > ignored = nullptr;
+        Http::async( request, ignored, settings );
+        
+        return request->m_pimpl->m_response;
+    }
+    
+    future< shared_ptr< Response > > Http::async( const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback, const shared_ptr< const Settings >& settings )
+    {
+#ifndef BUILD_SSL
+    
+        if ( settings->get_ssl_settings( ) not_eq nullptr )
+        {
+            throw runtime_error( "Not Implemented! Rebuild Restbed with SSL funcationality enabled." );
+        }
+        
 #endif
-                auto socket = std::make_shared< tcp::socket >( *request->m_pimpl->m_io_service );
-                request->m_pimpl->m_socket = std::make_shared< SocketImpl >( socket );
-#ifdef BUILD_SSL
-            }
-            
-#endif
-        }
+        bool finished = true;
+        auto completion_handler = callback;
         
-        if ( request->m_pimpl->m_socket->is_closed( ) )
+        if ( completion_handler == nullptr )
         {
-            request->m_pimpl->m_socket->connect( request->get_host( ), request->get_port( ), error );
-            
-            if ( error )
+            finished = false;
+            completion_handler = [ &finished ]( const shared_ptr< Request >, const shared_ptr< Response > )
             {
-                throw runtime_error( String::format( "Socket connect failed: %s\n", error.message( ).data( ) ) );
-            }
+                finished = true;
+            };
         }
         
-        request->m_pimpl->m_socket->write( request->to_bytes( ), error );
+        HttpImpl::socket_setup( request, settings );
         
-        if ( error )
-        {
-            throw runtime_error( String::format( "Socket write failed: %s\n", error.message( ).data( ) ) );
-        }
-        
-        request->m_pimpl->m_buffer = std::make_shared< boost::asio::streambuf >( );
-        istream response_stream( request->m_pimpl->m_buffer.get( ) );
-        request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, "\r\n", error );
-        
-        if ( error )
-        {
-            throw runtime_error( String::format( "Socket receive failed: %s\n", error.message( ).data( ) ) );
-        }
-        
-        string status_line = String::empty;
-        getline( response_stream, status_line );
-        
-        smatch matches;
-        static const std::regex status_line_pattern( "^([a-zA-Z]+)\\/(\\d*\\.?\\d*) (-?\\d+) (.+)\\r$" );
-        
-        if ( not std::regex_match( status_line, matches, status_line_pattern ) or matches.size( ) not_eq 5 )
-        {
-            throw runtime_error( String::format( "HTTP response status line malformed: '%s'\n", status_line.data( ) ) );
-        }
-        
-        auto response = std::make_shared< Response >( );
+        auto response = make_shared< Response >( );
         response->m_pimpl->m_request = request;
         request->m_pimpl->m_response = response;
-        response->set_protocol( matches[ 1 ].str( ) );
-        response->set_version( stod( matches[ 2 ].str( ) ) );
-        response->set_status_code( stoi( matches[ 3 ].str( ) ) );
-        response->set_status_message( matches[ 4 ].str( ) );
         
-        request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, "\r\n\r\n", error );
-        
-        if ( error == boost::asio::error::eof )
+        if ( request->m_pimpl->m_socket not_eq nullptr and request->m_pimpl->m_socket->is_closed( ) )
         {
-            return response;
-        }
-        
-        if ( error )
-        {
-            throw runtime_error( String::format( "Socket receive failed: '%s'\n", error.message( ).data( ) ) );
-        }
-        
-        string header = String::empty;
-        multimap< string, string > headers = { };
-        
-        while ( getline( response_stream, header ) and header not_eq "\r" )
-        {
-            static const std::regex header_pattern( "^([^:.]*): *(.*)\\s*$" );
-            
-            if ( not std::regex_match( header, matches, header_pattern ) or matches.size( ) not_eq 3 )
-            {
-                throw runtime_error( String::format( "HTTP header malformed: '%s'\n", header.data( ) ) );
-            }
-            
-            headers.insert( make_pair( matches[ 1 ], matches[ 2 ] ) );
-        }
-        
-        response->set_headers( headers );
-        
-        return response;
-    }
-	
-	restbed::Bytes Http::fetch(const std::size_t length, const std::shared_ptr<const restbed::Response>& response)
-    {
-        Bytes data = { };
-        auto request = response->get_request( );
-        
-        if ( length > request->m_pimpl->m_buffer->size( ) )
-        {
-            boost::system::error_code error;
-            const size_t adjusted_length = length - request->m_pimpl->m_buffer->size( );
-            
-            const size_t size = request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, adjusted_length, error );
-            
-            if ( error and error not_eq boost::asio::error::eof )
-            {
-                throw runtime_error( String::format( "Socket receive failed: '%s'\n", error.message( ).data( ) ) );
-            }
-            
-            const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
-            data = Bytes( data_ptr, data_ptr + size );
-            request->m_pimpl->m_buffer->consume( size );
+            request->m_pimpl->m_socket->connect( request->get_host( ), request->get_port( ), bind( HttpImpl::request_handler, _1, request, completion_handler ) );
         }
         else
         {
-            const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+            request->m_pimpl->m_socket->write( HttpImpl::to_bytes( request ), bind( HttpImpl::write_handler, _1, _2, request, completion_handler ) );
+        }
+        
+        if ( finished )
+        {
+            return std::async( std::launch::async, [ ]( const shared_ptr< Request > request ) -> shared_ptr< Response >
+            {
+                request->m_pimpl->m_io_service->run( );
+                return request->m_pimpl->m_response;
+            }, request );
+        }
+        else
+        {
+            do
+            {
+                request->m_pimpl->m_io_service->run_one( );
+            }
+            while ( finished == false and not request->m_pimpl->m_io_service->stopped( ) );
+            
+            std::promise< shared_ptr< Response > > result;
+            result.set_value( request->m_pimpl->m_response );
+            
+            return result.get_future( );
+        }
+    }
+    
+    Bytes Http::fetch( const size_t length, const shared_ptr< Response >& response )
+    {
+        if ( response == nullptr )
+        {
+            throw invalid_argument( String::empty );
+        }
+        
+        auto request = response->get_request( );
+        
+        if ( request == nullptr or request->m_pimpl->m_buffer == nullptr or request->m_pimpl->m_socket == nullptr )
+        {
+            throw invalid_argument( String::empty );
+        }
+        
+        Bytes data = { };
+        
+        if ( length > request->m_pimpl->m_buffer->size( ) )
+        {
+            error_code error;
+            const size_t size = length - request->m_pimpl->m_buffer->size( );
+            
+            request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, size, error );
+            
+            if ( error and error not_eq asio::error::eof )
+            {
+                throw runtime_error( String::format( "Socket receive failed: '%s'", error.message( ).data( ) ) );
+            }
+            
+            const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+            data = Bytes( data_ptr, data_ptr + length );
+            request->m_pimpl->m_buffer->consume( length );
+        }
+        else
+        {
+            const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
             data = Bytes( data_ptr, data_ptr + length );
             request->m_pimpl->m_buffer->consume( length );
         }
@@ -228,19 +250,30 @@ namespace restbed
         
         return data;
     }
-	
-	restbed::Bytes Http::fetch(const std::string& delimiter, const std::shared_ptr<const restbed::Response>& response)
+    
+    Bytes Http::fetch( const string& delimiter, const shared_ptr< Response >& response )
     {
-        boost::system::error_code error;
-        auto request = response->m_pimpl->m_request;
+        if ( response == nullptr )
+        {
+            throw invalid_argument( String::empty );
+        }
+        
+        auto request = response->get_request( );
+        
+        if ( request == nullptr or request->m_pimpl->m_buffer == nullptr or request->m_pimpl->m_socket == nullptr )
+        {
+            throw invalid_argument( String::empty );
+        }
+        
+        error_code error;
         const size_t size = request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, delimiter, error );
         
         if ( error )
         {
-            throw runtime_error( String::format( "Socket receive failed: '%s'\n", error.message( ).data( ) ) );
+            throw runtime_error( String::format( "Socket receive failed: '%s'", error.message( ).data( ) ) );
         }
         
-        const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+        const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
         const Bytes data( data_ptr, data_ptr + size );
         request->m_pimpl->m_buffer->consume( size );
         

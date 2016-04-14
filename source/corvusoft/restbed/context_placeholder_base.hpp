@@ -7,7 +7,7 @@
 
 //System Includes
 #include <typeinfo>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 
 //External Includes

@@ -10,7 +10,7 @@
 
 //Project Includes
 #include <corvusoft/restbed/context_placeholder_base.hpp>
-#include<boost/shared_ptr.hpp>
+
 //External Includes
 
 //System Namespaces

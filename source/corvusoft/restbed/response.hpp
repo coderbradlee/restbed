@@ -4,7 +4,7 @@
 
 #ifndef _RESTBED_RESPONSE_H
 #define _RESTBED_RESPONSE_H 1
-#include<boost/shared_ptr.hpp>
+
 //System Includes
 #include <map>
 #include <string>
@@ -47,8 +47,6 @@ namespace restbed
             virtual ~Response( void );
             
             //Functionality
-            Bytes to_bytes( void ) const;
-            
             bool has_header( const std::string& name ) const;
             
             //Getters

@@ -16,7 +16,9 @@ using std::string;
 using std::multimap;
 using std::make_pair;
 using std::shared_ptr;
-using boost::posix_time::milliseconds;
+using std::chrono::seconds;
+using std::chrono::milliseconds;
+using std::chrono::duration_cast;
 
 //Project Namespaces
 using restbed::detail::SettingsImpl;
@@ -65,7 +67,7 @@ namespace restbed
         return m_pimpl->m_case_insensitive_uris;
     }
     
-    boost::posix_time::milliseconds Settings::get_connection_timeout( void ) const
+    milliseconds Settings::get_connection_timeout( void ) const
     {
         return m_pimpl->m_connection_timeout;
     }
@@ -89,12 +91,12 @@ namespace restbed
     {
         return m_pimpl->m_properties;
     }
-#ifdef BUILD_SSL
-    std::shared_ptr< const SSLSettings > Settings::get_ssl_settings( void ) const
+    
+    shared_ptr< const SSLSettings > Settings::get_ssl_settings( void ) const
     {
         return m_pimpl->m_ssl_settings;
     }
-#endif
+    
     multimap< string, string > Settings::get_default_headers( void ) const
     {
         return m_pimpl->m_default_headers;
@@ -130,7 +132,12 @@ namespace restbed
         m_pimpl->m_case_insensitive_uris = value;
     }
     
-    void Settings::set_connection_timeout( const boost::posix_time::milliseconds& value )
+    void Settings::set_connection_timeout( const seconds& value )
+    {
+        m_pimpl->m_connection_timeout = duration_cast< milliseconds >( value );
+    }
+    
+    void Settings::set_connection_timeout( const milliseconds& value )
     {
         m_pimpl->m_connection_timeout = value;
     }
@@ -154,12 +161,12 @@ namespace restbed
     {
         m_pimpl->m_properties = values;
     }
-#ifdef BUILD_SSL
-    void Settings::set_ssl_settings( const std::shared_ptr< const SSLSettings >& values )
+    
+    void Settings::set_ssl_settings( const shared_ptr< const SSLSettings >& values )
     {
         m_pimpl->m_ssl_settings = values;
     }
-#endif
+    
     void Settings::set_default_header( const string& name, const string& value )
     {
         m_pimpl->m_default_headers.insert( make_pair( name, value ) );

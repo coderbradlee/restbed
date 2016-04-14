@@ -136,9 +136,9 @@ namespace restbed
             return value;
         }
         
-        static const std::regex escape( "([.^$|()\\[\\]{}*+?\\\\])" );
-        const auto expression = std::regex_replace( target, escape, "\\$1" );
-        auto pattern = std::regex( expression );
+        static const regex escape( "([.^$|()\\[\\]{}*+?\\\\])" );
+        const auto expression = regex_replace( target, escape, "\\$1" );
+        auto pattern = regex( expression );
         
         if ( option & String::Option::CASE_INSENSITIVE )
         {
@@ -148,9 +148,9 @@ namespace restbed
         smatch match;
         string result = value;
         
-        while ( std::regex_search( result, match, pattern ) )
+        while ( regex_search( result, match, pattern ) )
         {
-            result = std::regex_replace( result, pattern, substitute );
+            result = regex_replace( result, pattern, substitute );
         }
         
         return result;

@@ -10,7 +10,7 @@
 #include "corvusoft/restbed/session.hpp"
 #include "corvusoft/restbed/settings.hpp"
 #include "corvusoft/restbed/session_manager.hpp"
-#include<boost/shared_ptr.hpp>
+
 //External Includes
 
 //System Namespaces
@@ -41,22 +41,22 @@ namespace restbed
         return;
     }
     
-    void SessionManager::start( const std::shared_ptr< const Settings >& )
+    void SessionManager::start( const shared_ptr< const Settings >& )
     {
         return;
     }
     
-    void SessionManager::create( const function< void ( const std::shared_ptr< Session > ) >& callback )
+    void SessionManager::create( const function< void ( const shared_ptr< Session > ) >& callback )
     {
-        callback( std::make_shared< Session >( String::empty ) );
+        callback( make_shared< Session >( String::empty ) );
     }
     
-    void SessionManager::load( const std::shared_ptr< Session > session, const function< void ( const std::shared_ptr< Session > ) >& callback )
+    void SessionManager::load( const shared_ptr< Session > session, const function< void ( const shared_ptr< Session > ) >& callback )
     {
         callback( session );
     }
 
-    void SessionManager::save( const std::shared_ptr< Session > session, const function< void ( const std::shared_ptr< Session > ) >& callback )
+    void SessionManager::save( const shared_ptr< Session > session, const function< void ( const shared_ptr< Session > ) >& callback )
     {
         callback( session );
     }

@@ -12,6 +12,7 @@
 #include "corvusoft/restbed/string.hpp"
 #include "corvusoft/restbed/request.hpp"
 #include "corvusoft/restbed/response.hpp"
+#include "corvusoft/restbed/detail/socket_impl.hpp"
 #include "corvusoft/restbed/detail/request_impl.hpp"
 #include "corvusoft/restbed/detail/response_impl.hpp"
 
@@ -41,68 +42,27 @@ namespace restbed
     
     Request::Request( const Uri& uri ) : m_pimpl( new detail::RequestImpl )
     {
-        m_pimpl->m_uri = std::make_shared< Uri >( uri );
-        m_pimpl->m_port = uri.get_port( );
+        m_pimpl->m_uri = make_shared< Uri >( uri );
         m_pimpl->m_path = uri.get_path( );
+        m_pimpl->m_port = uri.get_port( );
         m_pimpl->m_host = uri.get_authority( );
         m_pimpl->m_query_parameters = uri.get_query_parameters( );
+        m_pimpl->m_protocol = String::uppercase( uri.get_scheme( ) );
         
-        m_pimpl->m_is_https = ( String::lowercase( uri.get_scheme( ) ) == "https" );
+        if ( m_pimpl->m_path.empty( ) )
+        {
+            m_pimpl->m_path = "/";
+        }
         
         if ( m_pimpl->m_port == 0 )
         {
-            m_pimpl->m_port = ( m_pimpl->m_is_https ) ? 443 : 80;
+            m_pimpl->m_port = ( m_pimpl->m_protocol == "HTTPS" ) ? 443 : 80;
         }
     }
     
     Request::~Request( void )
     {
         delete m_pimpl;
-    }
-    
-    Bytes Request::to_bytes( void ) const
-    {
-        string path = m_pimpl->m_path;
-        
-        if ( not m_pimpl->m_query_parameters.empty( ) )
-        {
-            string query = String::empty;
-            
-            for ( const auto parameter : m_pimpl->m_query_parameters )
-            {
-                query += Uri::encode_parameter( parameter.first ) + "=" + Uri::encode_parameter( parameter.second ) + "&";
-            }
-            
-            path += "?" + query.substr( 0, query.length( ) - 1 );
-        }
-        
-        if ( m_pimpl->m_uri not_eq nullptr and not m_pimpl->m_uri->get_fragment( ).empty( ) )
-        {
-            path += "#" + m_pimpl->m_uri->get_fragment( );
-        }
-        
-        auto data = String::format( "%s %s %s/%.1f\r\n",
-                                    m_pimpl->m_method.data( ),
-                                    path.data( ),
-                                    m_pimpl->m_protocol.data( ),
-                                    m_pimpl->m_version );
-                                    
-        if ( not m_pimpl->m_headers.empty( ) )
-        {
-            const auto headers = String::join( m_pimpl->m_headers, ": ", "\r\n" );
-            data += headers + "\r\n";
-        }
-        
-        data += "\r\n";
-        
-        Bytes bytes = String::to_bytes( data );
-        
-        if ( not m_pimpl->m_body.empty( ) )
-        {
-            bytes.insert( bytes.end( ), m_pimpl->m_body.begin( ), m_pimpl->m_body.end( ) );
-        }
-        
-        return bytes;
     }
     
     bool Request::has_header( const string& name ) const
@@ -117,9 +77,9 @@ namespace restbed
         return iterator not_eq m_pimpl->m_headers.end( );
     }
     
-    bool Request::has_path_parameter( const string& name, const bool ignore_case ) const
+    bool Request::has_path_parameter( const string& name, const String::Option option ) const
     {
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             return m_pimpl->m_path_parameters.find( name ) not_eq m_pimpl->m_path_parameters.end( );
         }
@@ -133,9 +93,9 @@ namespace restbed
         return iterator not_eq m_pimpl->m_path_parameters.end( );
     }
     
-    bool Request::has_query_parameter( const string& name, const bool ignore_case ) const
+    bool Request::has_query_parameter( const string& name, const String::Option option ) const
     {
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             return m_pimpl->m_query_parameters.find( name ) not_eq m_pimpl->m_query_parameters.end( );
         }
@@ -164,7 +124,7 @@ namespace restbed
         return m_pimpl->m_body;
     }
     
-    const std::shared_ptr< const Response > Request::get_response( void ) const
+    const shared_ptr< const Response > Request::get_response( void ) const
     {
         return m_pimpl->m_response;
     }
@@ -424,14 +384,14 @@ namespace restbed
         }
     }
     
-    string Request::get_query_parameter( const string& name, const bool ignore_case ) const
+    string Request::get_query_parameter( const string& name, const String::Option option ) const
     {
-        return get_query_parameter( name, string( "" ), ignore_case );
+        return get_query_parameter( name, string( "" ), option );
     }
     
-    string Request::get_query_parameter( const string& name, const string& default_value, bool ignore_case ) const
+    string Request::get_query_parameter( const string& name, const string& default_value, const String::Option option ) const
     {
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             const auto iterator = m_pimpl->m_query_parameters.find( name );
             return ( iterator == m_pimpl->m_query_parameters.end( ) ) ? default_value : iterator->second;
@@ -446,20 +406,20 @@ namespace restbed
         return ( iterator == m_pimpl->m_query_parameters.end( ) ) ? default_value : iterator->second;
     }
     
-    string Request::get_query_parameter( const string& name, const function< string ( const string& ) >& transform, bool ignore_case ) const
+    string Request::get_query_parameter( const string& name, const function< string ( const string& ) >& transform, const String::Option option ) const
     {
-        const auto parameter = get_query_parameter( name, string( "" ), ignore_case );
+        const auto parameter = get_query_parameter( name, string( "" ), option );
         return ( transform == nullptr ) ? parameter : transform( parameter );
     }
     
-    multimap< string, string > Request::get_query_parameters( const string& name, const bool ignore_case ) const
+    multimap< string, string > Request::get_query_parameters( const string& name, const String::Option option ) const
     {
         if ( name.empty( ) )
         {
             return m_pimpl->m_query_parameters;
         }
         
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             const auto iterators = m_pimpl->m_query_parameters.equal_range( name );
             return decltype( m_pimpl->m_query_parameters )( iterators.first, iterators.second );
@@ -575,14 +535,14 @@ namespace restbed
         }
     }
     
-    string Request::get_path_parameter( const string& name, const bool ignore_case ) const
+    string Request::get_path_parameter( const string& name, const String::Option option ) const
     {
-        return get_path_parameter( name, string( "" ), ignore_case );
+        return get_path_parameter( name, string( "" ), option );
     }
     
-    string Request::get_path_parameter( const string& name, const string& default_value, bool ignore_case ) const
+    string Request::get_path_parameter( const string& name, const string& default_value, const String::Option option ) const
     {
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             const auto iterator = m_pimpl->m_path_parameters.find( name );
             return ( iterator == m_pimpl->m_path_parameters.end( ) ) ? default_value : iterator->second;
@@ -597,20 +557,20 @@ namespace restbed
         return ( iterator == m_pimpl->m_path_parameters.end( ) ) ? default_value : iterator->second;
     }
     
-    string Request::get_path_parameter( const string& name, const function< string ( const string& ) >& transform, bool ignore_case ) const
+    string Request::get_path_parameter( const string& name, const function< string ( const string& ) >& transform, const String::Option option ) const
     {
-        const auto parameter = get_path_parameter( name, string( "" ), ignore_case );
+        const auto parameter = get_path_parameter( name, string( "" ), option );
         return ( transform == nullptr ) ? parameter : transform( parameter );
     }
     
-    map< string, string > Request::get_path_parameters( const string& name, const bool ignore_case ) const
+    map< string, string > Request::get_path_parameters( const string& name, const String::Option option ) const
     {
         if ( name.empty( ) )
         {
             return m_pimpl->m_path_parameters;
         }
         
-        if ( not ignore_case )
+        if ( option == String::Option::CASE_SENSITIVE )
         {
             const auto iterators = m_pimpl->m_path_parameters.equal_range( name );
             return decltype( m_pimpl->m_path_parameters )( iterators.first, iterators.second );
@@ -642,6 +602,11 @@ namespace restbed
     
     void Request::set_port( const uint16_t value )
     {
+        if ( m_pimpl->m_socket not_eq nullptr )
+        {
+            m_pimpl->m_socket->close( );
+        }
+        
         m_pimpl->m_port = value;
     }
     
@@ -657,6 +622,11 @@ namespace restbed
     
     void Request::set_host( const string& value )
     {
+        if ( m_pimpl->m_socket not_eq nullptr )
+        {
+            m_pimpl->m_socket->close( );
+        }
+        
         m_pimpl->m_host = value;
     }
     

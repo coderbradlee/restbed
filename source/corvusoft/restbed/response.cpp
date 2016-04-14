@@ -42,32 +42,6 @@ namespace restbed
         delete m_pimpl;
     }
     
-    Bytes Response::to_bytes( void ) const
-    {
-        auto data = String::format( "%s/%.1f %i %s\r\n",
-                                    m_pimpl->m_protocol.data( ),
-                                    m_pimpl->m_version,
-                                    m_pimpl->m_status_code,
-                                    m_pimpl->m_status_message.data( ) );
-                                    
-        if ( not m_pimpl->m_headers.empty( ) )
-        {
-            const auto headers = String::join( m_pimpl->m_headers, ": ", "\r\n" );
-            data += headers + "\r\n";
-        }
-        
-        data += "\r\n";
-        
-        Bytes bytes = String::to_bytes( data );
-        
-        if ( not m_pimpl->m_body.empty( ) )
-        {
-            bytes.insert( bytes.end( ), m_pimpl->m_body.begin( ), m_pimpl->m_body.end( ) );
-        }
-        
-        return bytes;
-    }
-    
     bool Response::has_header( const string& name ) const
     {
         const auto key = String::lowercase( name );
@@ -105,9 +79,9 @@ namespace restbed
         return m_pimpl->m_status_message;
     }
     
-    const std::shared_ptr< const Request > Response::get_request( void ) const
+    const shared_ptr< const Request > Response::get_request( void ) const
     {
-        return m_pimpl->m_request;
+        return m_pimpl->m_request.lock( );
     }
     
     void Response::get_body( string& body, const function< string ( const Bytes& ) >& transform ) const

@@ -9,10 +9,9 @@
 #include <map>
 #include <memory>
 #include <string>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 #include "corvusoft/restbed/byte.hpp"
-#include "corvusoft/restbed/request.hpp"
 
 //External Includes
 
@@ -37,15 +36,15 @@ namespace restbed
             
             double m_version = 1.1;
             
-            int m_status_code = 200;
+            int m_status_code = 0;
             
             std::string m_protocol = "HTTP";
             
             std::string m_status_message = "";
-
-            std::shared_ptr< const Request > m_request = nullptr;
             
             std::multimap< std::string, std::string > m_headers { };
+            
+            std::weak_ptr< Request > m_request = std::weak_ptr< Request >( );
         };
     }
 }

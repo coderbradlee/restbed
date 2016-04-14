@@ -4,7 +4,7 @@
 
 #ifndef _RESTBED_STATUS_CODE_H
 #define _RESTBED_STATUS_CODE_H 1
-#include<boost/shared_ptr.hpp>
+
 //System Includes
 
 //Project Includes

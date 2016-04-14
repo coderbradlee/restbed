@@ -8,7 +8,7 @@
 //System Includes
 #include <string>
 #include <cstdint>
-#include<boost/shared_ptr.hpp>
+
 //Project Includes
 
 //External Includes

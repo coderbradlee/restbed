@@ -8,11 +8,13 @@
 //System Includes
 #include <string>
 #include <memory>
+#include <future>
 #include <cstddef>
+#include <functional>
 
 //Project Includes
 #include <corvusoft/restbed/byte.hpp>
-#include<boost/shared_ptr.hpp>
+
 //External Includes
 
 //System Namespaces
@@ -26,7 +28,7 @@ namespace restbed
     //Forward Declarations
     class Request;
     class Response;
-    class SSLSettings;
+    class Settings;
     
     class Http
     {
@@ -38,14 +40,29 @@ namespace restbed
             //Constructors
             
             //Functionality
-#ifdef BUILD_SSL
-            static std::shared_ptr< const Response > sync( const std::shared_ptr< const Request >& request, const std::shared_ptr< const SSLSettings >& ssl_settings = nullptr );
-#else
-            static std::shared_ptr< const Response > sync( const std::shared_ptr< const Request >& request );
-#endif
-            static Bytes fetch( const std::size_t length, const std::shared_ptr<const Response>& response );
+            static Bytes to_bytes( const std::shared_ptr< Request >& value );
             
-            static Bytes fetch( const std::string& delimiter, const std::shared_ptr<const Response>& response );
+            static Bytes to_bytes( const std::shared_ptr< Response >& value );
+            
+            static void close( const std::shared_ptr< Request >& request );
+            
+            static void close( const std::shared_ptr< Response >& response );
+            
+            static bool is_open( const std::shared_ptr< Request >& request );
+            
+            static bool is_open( const std::shared_ptr< Response >& response );
+            
+            static bool is_closed( const std::shared_ptr< Request >& request );
+            
+            static bool is_closed( const std::shared_ptr< Response >& response );
+            
+            static const std::shared_ptr< Response > sync( const std::shared_ptr< Request >& request, const std::shared_ptr< const Settings >& settings = std::make_shared< Settings >( ) );
+            
+            static std::future< std::shared_ptr< Response > > async( const std::shared_ptr< Request >& request, const std::function< void ( const std::shared_ptr< Request >, const std::shared_ptr< Response > ) >& callback, const std::shared_ptr< const Settings >& settings = std::make_shared< Settings >( ) );
+            
+            static Bytes fetch( const std::size_t length, const std::shared_ptr< Response >& response );
+            
+            static Bytes fetch( const std::string& delimiter, const std::shared_ptr< Response >& response );
             
             //Getters
             

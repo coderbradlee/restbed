@@ -46,20 +46,26 @@ namespace restbed
         delete m_pimpl;
     }
     
-    void Resource::add_rule( const std::shared_ptr< Rule >& rule )
+    void Resource::add_rule( const shared_ptr< Rule >& rule )
     {
-        m_pimpl->m_rules.push_back( rule );
-        
-        stable_sort( m_pimpl->m_rules.begin( ), m_pimpl->m_rules.end( ), [ ]( const std::shared_ptr< const Rule >& lhs, const std::shared_ptr< const Rule >& rhs )
+        if ( rule not_eq nullptr )
         {
-            return lhs->get_priority( ) < rhs->get_priority( );
-        } );
+            m_pimpl->m_rules.push_back( rule );
+            
+            stable_sort( m_pimpl->m_rules.begin( ), m_pimpl->m_rules.end( ), [ ]( const shared_ptr< const Rule >& lhs, const shared_ptr< const Rule >& rhs )
+            {
+                return lhs->get_priority( ) < rhs->get_priority( );
+            } );
+        }
     }
     
-    void Resource::add_rule( const std::shared_ptr< Rule >& rule, const int priority )
+    void Resource::add_rule( const shared_ptr< Rule >& rule, const int priority )
     {
-        rule->set_priority( priority );
-        add_rule( rule );
+        if ( rule not_eq nullptr )
+        {
+            rule->set_priority( priority );
+            add_rule( rule );
+        }
     }
     
     void Resource::set_path( const string& value )
@@ -82,35 +88,38 @@ namespace restbed
         m_pimpl->m_default_headers = values;
     }
     
-    void Resource::set_failed_filter_validation_handler( const function< void ( const std::shared_ptr< Session > ) >& value )
+    void Resource::set_failed_filter_validation_handler( const function< void ( const shared_ptr< Session > ) >& value )
     {
         m_pimpl->m_failed_filter_validation_handler = value;
     }
     
-    void Resource::set_error_handler( const function< void ( const int, const exception&, const std::shared_ptr< Session > ) >& value )
+    void Resource::set_error_handler( const function< void ( const int, const exception&, const shared_ptr< Session > ) >& value )
     {
         m_pimpl->m_error_handler = value;
     }
     
-    void Resource::set_authentication_handler( const function< void ( const std::shared_ptr< Session >, const function< void ( const std::shared_ptr< Session > ) >& ) >& value )
+    void Resource::set_authentication_handler( const function< void ( const shared_ptr< Session >, const function< void ( const shared_ptr< Session > ) >& ) >& value )
     {
         m_pimpl->m_authentication_handler = value;
     }
     
-    void Resource::set_method_handler( const string& method, const function< void ( const std::shared_ptr< Session > ) >& callback )
+    void Resource::set_method_handler( const string& method, const function< void ( const shared_ptr< Session > ) >& callback )
     {
         static const multimap< string, string > empty { };
         set_method_handler( method, empty, callback );
     }
     
-    void Resource::set_method_handler( const string& method, const multimap< string, string >& filters, const function< void ( const std::shared_ptr< Session > ) >& callback )
+    void Resource::set_method_handler( const string& method, const multimap< string, string >& filters, const function< void ( const shared_ptr< Session > ) >& callback )
     {
         if ( method.empty( ) )
         {
             throw invalid_argument( "Attempt to set resource handler to an empty protocol method." );
         }
         
-        m_pimpl->m_methods.insert( method );
-        m_pimpl->m_method_handlers.insert( make_pair( method, make_pair( filters, callback ) ) );
+        if ( callback not_eq nullptr )
+        {
+            m_pimpl->m_methods.insert( method );
+            m_pimpl->m_method_handlers.insert( make_pair( method, make_pair( filters, callback ) ) );
+        }
     }
 }

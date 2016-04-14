@@ -14,13 +14,17 @@
 #include <vector>
 #include <stdexcept>
 #include <functional>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <system_error>
+
 //Project Includes
 
 //External Includes
-#include <boost/asio.hpp>
+#include <asio/ip/tcp.hpp>
+#include <asio/signal_set.hpp>
+#include <asio/io_service.hpp>
+
 #ifdef BUILD_SSL
-    #include <boost/asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -32,10 +36,10 @@
 namespace restbed
 {
     //Forward Declarations
+    class Uri;
     class Rule;
     class Logger;
     class Session;
-    class Service;
     class Resource;
     class Settings;
     class SessionManager;
@@ -66,8 +70,12 @@ namespace restbed
                 
                 void https_listen( void ) const;
                 
-                void create_ssl_session( const std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >& socket, const boost::system::error_code& error ) const;
+                void create_ssl_session( const std::shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > >& socket, const std::error_code& error ) const;
 #endif
+                void setup_signal_handler( );
+                
+                void signal_handler( const std::error_code& error, const int signal_number ) const;
+                
                 std::string sanitise_path( const std::string& path ) const;
                 
                 void not_found( const std::shared_ptr< Session > session ) const;
@@ -84,7 +92,7 @@ namespace restbed
                 
                 void router( const std::shared_ptr< Session > session ) const;
                 
-                void create_session( const std::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::system::error_code& error ) const;
+                void create_session( const std::shared_ptr< asio::ip::tcp::socket >& socket, const std::error_code& error ) const;
                 
                 void extract_path_parameters( const std::string& sanitised_path, const std::shared_ptr< const Request >& request ) const;
                 
@@ -94,7 +102,20 @@ namespace restbed
                 
                 bool resource_router( const std::shared_ptr< Session > session, const std::pair< std::string, std::shared_ptr< const Resource > >& route ) const;
                 
+                static void default_error_handler( const int status, const std::exception& error, const std::shared_ptr< Session > session );
+                
+                static const std::map< std::string, std::string > parse_request_line( std::istream& stream );
+                
+                static const std::multimap< std::string, std::string > parse_request_headers( std::istream& stream );
+                
+                void parse_request( const std::error_code& error, std::size_t length, const std::shared_ptr< Session > session ) const;
+                
                 //Getters
+                const std::shared_ptr< const Uri > get_http_uri( void ) const;
+                
+                const std::shared_ptr< const Uri > get_https_uri( void ) const;
+                
+                const std::function< void ( const int, const std::exception&, const std::shared_ptr< Session > ) > get_error_handler( const std::shared_ptr< Session >& session ) const;
                 
                 //Setters
                 
@@ -109,7 +130,9 @@ namespace restbed
                 
                 std::shared_ptr< const Settings > m_settings;
                 
-                std::shared_ptr< boost::asio::io_service > m_io_service;
+                std::shared_ptr< asio::io_service > m_io_service;
+                
+                std::shared_ptr< asio::signal_set > m_signal_set;
                 
                 std::shared_ptr< SessionManager > m_session_manager;
                 
@@ -119,17 +142,19 @@ namespace restbed
 #ifdef BUILD_SSL
                 std::shared_ptr< const SSLSettings > m_ssl_settings;
                 
-                std::shared_ptr< boost::asio::ssl::context > m_ssl_context;
+                std::shared_ptr< asio::ssl::context > m_ssl_context;
                 
-                std::shared_ptr< boost::asio::ip::tcp::acceptor > m_ssl_acceptor;
+                std::shared_ptr< asio::ip::tcp::acceptor > m_ssl_acceptor;
 #endif
-                std::shared_ptr< boost::asio::ip::tcp::acceptor > m_acceptor;
+                std::shared_ptr< asio::ip::tcp::acceptor > m_acceptor;
                 
                 std::map< std::string, std::string > m_resource_paths;
                 
                 std::map< std::string, std::shared_ptr< const Resource > > m_resource_routes;
                 
                 std::function< void ( void ) > m_ready_handler;
+                
+                std::map< int, std::function< void ( const int ) > > m_signal_handlers;
                 
                 std::function< void ( const std::shared_ptr< Session > ) > m_not_found_handler;
                 
