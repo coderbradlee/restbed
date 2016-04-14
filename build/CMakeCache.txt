@@ -20,7 +20,7 @@ BUILD_EXAMPLES:BOOL=OFF
 //Build shared library.
 BUILD_SHARED:BOOL=OFF
 
-//Build Secure Socket Layer Support.
+//Build secure socket layer support.
 BUILD_SSL:BOOL=ON
 
 //Build all available test suites.

@@ -11,21 +11,15 @@ vector
 -
 cstdint
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/context_placeholder.hpp
 typeinfo
 -
 corvusoft/restbed/context_placeholder_base.hpp
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/context_placeholder_base.hpp
 typeinfo
--
-boost/shared_ptr.hpp
 -
 
 ../source/corvusoft/restbed/context_value.hpp
@@ -41,7 +35,27 @@ corvusoft/restbed/context_placeholder.hpp
 -
 corvusoft/restbed/context_placeholder_base.hpp
 -
-boost/shared_ptr.hpp
+
+../source/corvusoft/restbed/detail/http_impl.hpp
+string
+-
+memory
+-
+functional
+-
+system_error
+-
+corvusoft/restbed/byte.hpp
+-
+boost/asio/error.hpp
+-
+boost/asio/ip/tcp.hpp
+-
+boost/asio/buffer.hpp
+-
+boost/asio/streambuf.hpp
+-
+boost/asio/ssl.hpp
 -
 
 ../source/corvusoft/restbed/detail/request_impl.hpp
@@ -53,11 +67,11 @@ memory
 -
 cstdint
 -
-boost/shared_ptr.hpp
--
 corvusoft/restbed/byte.hpp
 -
-boost/asio.hpp
+boost/asio/streambuf.hpp
+-
+boost/asio/io_service.hpp
 -
 
 ../source/corvusoft/restbed/detail/resource_impl.hpp
@@ -71,8 +85,6 @@ vector
 -
 functional
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/detail/response_impl.hpp
 map
@@ -81,12 +93,8 @@ memory
 -
 string
 -
-boost/shared_ptr.hpp
--
 corvusoft/restbed/byte.hpp
 ../source/corvusoft/restbed/detail/corvusoft/restbed/byte.hpp
-corvusoft/restbed/request.hpp
-../source/corvusoft/restbed/detail/corvusoft/restbed/request.hpp
 
 ../source/corvusoft/restbed/detail/rule_engine_impl.hpp
 vector
@@ -95,17 +103,9 @@ memory
 -
 cstddef
 -
-boost/shared_ptr.hpp
--
-corvusoft/restbed/rule.hpp
-../source/corvusoft/restbed/detail/corvusoft/restbed/rule.hpp
-corvusoft/restbed/session.hpp
-../source/corvusoft/restbed/detail/corvusoft/restbed/session.hpp
 
 ../source/corvusoft/restbed/detail/rule_impl.hpp
 memory
--
-boost/shared_ptr.hpp
 -
 
 ../source/corvusoft/restbed/detail/service_impl.hpp
@@ -125,9 +125,13 @@ stdexcept
 -
 functional
 -
-boost/date_time/posix_time/posix_time.hpp
+system_error
 -
-boost/asio.hpp
+boost/asio/ip/tcp.hpp
+-
+boost/asio/signal_set.hpp
+-
+boost/asio/io_service.hpp
 -
 boost/asio/ssl.hpp
 -
@@ -143,12 +147,10 @@ istream
 -
 functional
 -
+system_error
+-
 corvusoft/restbed/byte.hpp
 ../source/corvusoft/restbed/detail/corvusoft/restbed/byte.hpp
-corvusoft/restbed/logger.hpp
-../source/corvusoft/restbed/detail/corvusoft/restbed/logger.hpp
-boost/asio.hpp
--
 
 ../source/corvusoft/restbed/detail/settings_impl.hpp
 map
@@ -173,11 +175,15 @@ cstdint
 -
 functional
 -
+system_error
+-
 corvusoft/restbed/byte.hpp
 ../source/corvusoft/restbed/detail/corvusoft/restbed/byte.hpp
-boost/date_time/posix_time/posix_time.hpp
+boost/asio/ip/tcp.hpp
 -
-boost/asio.hpp
+boost/asio/streambuf.hpp
+-
+boost/asio/steady_timer.hpp
 -
 boost/asio/ssl.hpp
 -
@@ -199,19 +205,19 @@ string
 -
 memory
 -
+future
+-
 cstddef
 -
-corvusoft/restbed/byte.hpp
+functional
 -
-boost/shared_ptr.hpp
+corvusoft/restbed/byte.hpp
 -
 
 ../source/corvusoft/restbed/logger.hpp
 string
 -
 memory
--
-boost/shared_ptr.hpp
 -
 
 ../source/corvusoft/restbed/request.hpp
@@ -227,7 +233,7 @@ functional
 -
 corvusoft/restbed/byte.hpp
 -
-boost/shared_ptr.hpp
+corvusoft/restbed/string.hpp
 -
 
 ../source/corvusoft/restbed/resource.hpp
@@ -239,12 +245,8 @@ string
 -
 functional
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/response.hpp
-boost/shared_ptr.hpp
--
 map
 -
 string
@@ -263,8 +265,6 @@ memory
 -
 functional
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/service.hpp
 map
@@ -278,10 +278,6 @@ string
 stdexcept
 -
 functional
--
-boost/shared_ptr.hpp
--
-boost/date_time/posix_time/posix_time.hpp
 -
 
 ../source/corvusoft/restbed/session.hpp
@@ -297,23 +293,17 @@ memory
 -
 functional
 -
-boost/shared_ptr.hpp
--
 corvusoft/restbed/byte.hpp
 -
 corvusoft/restbed/string.hpp
 -
 corvusoft/restbed/context_value.hpp
 -
-boost/date_time/posix_time/posix_time.hpp
--
 
 ../source/corvusoft/restbed/session_manager.hpp
 memory
 -
 functional
--
-boost/shared_ptr.hpp
 -
 
 ../source/corvusoft/restbed/settings.hpp
@@ -327,22 +317,14 @@ string
 -
 cstdint
 -
-boost/shared_ptr.hpp
--
-boost/date_time/posix_time/posix_time.hpp
--
 
 ../source/corvusoft/restbed/ssl_settings.hpp
 string
 -
 cstdint
 -
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/status_code.hpp
-boost/shared_ptr.hpp
--
 
 ../source/corvusoft/restbed/string.hpp
 map
@@ -352,8 +334,6 @@ string
 vector
 -
 cstdarg
--
-boost/shared_ptr.hpp
 -
 corvusoft/restbed/byte.hpp
 -
@@ -365,15 +345,53 @@ string
 -
 cstdint
 -
-boost/shared_ptr.hpp
--
 corvusoft/restbed/byte.hpp
+-
+
+/root/restbed/source/corvusoft/restbed/detail/http_impl.cpp
+map
+-
+regex
+-
+sstream
+-
+iso646.h
+-
+corvusoft/restbed/uri.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/uri.hpp
+corvusoft/restbed/string.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/string.hpp
+corvusoft/restbed/request.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/request.hpp
+corvusoft/restbed/response.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/response.hpp
+corvusoft/restbed/settings.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/settings.hpp
+corvusoft/restbed/ssl_settings.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/ssl_settings.hpp
+corvusoft/restbed/detail/http_impl.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/http_impl.hpp
+corvusoft/restbed/detail/socket_impl.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/socket_impl.hpp
+corvusoft/restbed/detail/request_impl.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/request_impl.hpp
+boost/asio/error.hpp
+-
+boost/asio/ip/tcp.hpp
+-
+boost/asio/buffer.hpp
+-
+boost/asio/streambuf.hpp
+-
+boost/asio/ssl.hpp
 -
 
 /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp
 regex
 -
 cstdio
+-
+sstream
 -
 utility
 -
@@ -385,6 +403,8 @@ algorithm
 -
 functional
 -
+corvusoft/restbed/uri.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/uri.hpp
 corvusoft/restbed/rule.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/rule.hpp
 corvusoft/restbed/logger.hpp
@@ -417,6 +437,16 @@ corvusoft/restbed/detail/resource_impl.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/resource_impl.hpp
 corvusoft/restbed/detail/rule_engine_impl.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/rule_engine_impl.hpp
+boost/asio/error.hpp
+-
+boost/asio/ip/tcp.hpp
+-
+boost/asio/buffer.hpp
+-
+boost/asio/streambuf.hpp
+-
+boost/asio/ssl.hpp
+-
 
 /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp
 regex
@@ -427,8 +457,12 @@ ciso646
 -
 stdexcept
 -
+system_error
+-
 corvusoft/restbed/uri.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/uri.hpp
+corvusoft/restbed/http.hpp
+/root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/http.hpp
 corvusoft/restbed/string.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/string.hpp
 corvusoft/restbed/session.hpp
@@ -461,17 +495,21 @@ corvusoft/restbed/logger.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/logger.hpp
 corvusoft/restbed/detail/socket_impl.hpp
 /root/restbed/source/corvusoft/restbed/detail/corvusoft/restbed/detail/socket_impl.hpp
+boost/asio/read.hpp
+-
+boost/asio/write.hpp
+-
+boost/asio/connect.hpp
+-
+boost/asio/read_until.hpp
+-
+boost/asio/io_service.hpp
+-
 
 /root/restbed/source/corvusoft/restbed/http.cpp
-map
--
-regex
--
 memory
 -
 string
--
-vector
 -
 ciso646
 -
@@ -479,9 +517,7 @@ cstdint
 -
 stdexcept
 -
-algorithm
--
-boost/shared_ptr.hpp
+system_error
 -
 corvusoft/restbed/uri.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/uri.hpp
@@ -493,15 +529,21 @@ corvusoft/restbed/request.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/request.hpp
 corvusoft/restbed/response.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/response.hpp
+corvusoft/restbed/settings.hpp
+/root/restbed/source/corvusoft/restbed/corvusoft/restbed/settings.hpp
 corvusoft/restbed/ssl_settings.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/ssl_settings.hpp
+corvusoft/restbed/detail/http_impl.hpp
+/root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/http_impl.hpp
 corvusoft/restbed/detail/socket_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/socket_impl.hpp
 corvusoft/restbed/detail/request_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/request_impl.hpp
 corvusoft/restbed/detail/response_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/response_impl.hpp
-boost/asio.hpp
+boost/asio/error.hpp
+-
+boost/asio/buffer.hpp
 -
 
 /root/restbed/source/corvusoft/restbed/request.cpp
@@ -519,6 +561,8 @@ corvusoft/restbed/request.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/request.hpp
 corvusoft/restbed/response.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/response.hpp
+corvusoft/restbed/detail/socket_impl.hpp
+/root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/socket_impl.hpp
 corvusoft/restbed/detail/request_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/request_impl.hpp
 corvusoft/restbed/detail/response_impl.hpp
@@ -589,8 +633,8 @@ algorithm
 -
 functional
 -
-boost/shared_ptr.hpp
--
+corvusoft/restbed/uri.hpp
+/root/restbed/source/corvusoft/restbed/corvusoft/restbed/uri.hpp
 corvusoft/restbed/rule.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/rule.hpp
 corvusoft/restbed/logger.hpp
@@ -611,13 +655,17 @@ corvusoft/restbed/detail/service_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/service_impl.hpp
 corvusoft/restbed/detail/resource_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/resource_impl.hpp
-boost/asio.hpp
+boost/asio/io_service.hpp
+-
+boost/asio/steady_timer.hpp
 -
 boost/asio/ssl.hpp
 -
 
 /root/restbed/source/corvusoft/restbed/session.cpp
 ciso646
+-
+system_error
 -
 corvusoft/restbed/session.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/session.hpp
@@ -635,9 +683,7 @@ corvusoft/restbed/detail/request_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/request_impl.hpp
 corvusoft/restbed/detail/session_impl.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/detail/session_impl.hpp
-boost/shared_ptr.hpp
--
-boost/asio.hpp
+boost/asio/buffer.hpp
 -
 
 /root/restbed/source/corvusoft/restbed/session_manager.cpp
@@ -651,8 +697,6 @@ corvusoft/restbed/settings.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/settings.hpp
 corvusoft/restbed/session_manager.hpp
 /root/restbed/source/corvusoft/restbed/corvusoft/restbed/session_manager.hpp
-boost/shared_ptr.hpp
--
 
 /root/restbed/source/corvusoft/restbed/settings.cpp
 corvusoft/restbed/settings.hpp

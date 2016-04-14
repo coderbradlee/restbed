@@ -167,6 +167,33 @@ restbed/fast:
 	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/build
 .PHONY : restbed/fast
 
+source/corvusoft/restbed/detail/http_impl.o: source/corvusoft/restbed/detail/http_impl.cpp.o
+
+.PHONY : source/corvusoft/restbed/detail/http_impl.o
+
+# target to build an object file
+source/corvusoft/restbed/detail/http_impl.cpp.o:
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o
+.PHONY : source/corvusoft/restbed/detail/http_impl.cpp.o
+
+source/corvusoft/restbed/detail/http_impl.i: source/corvusoft/restbed/detail/http_impl.cpp.i
+
+.PHONY : source/corvusoft/restbed/detail/http_impl.i
+
+# target to preprocess a source file
+source/corvusoft/restbed/detail/http_impl.cpp.i:
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.i
+.PHONY : source/corvusoft/restbed/detail/http_impl.cpp.i
+
+source/corvusoft/restbed/detail/http_impl.s: source/corvusoft/restbed/detail/http_impl.cpp.s
+
+.PHONY : source/corvusoft/restbed/detail/http_impl.s
+
+# target to generate assembly for a file
+source/corvusoft/restbed/detail/http_impl.cpp.s:
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.s
+.PHONY : source/corvusoft/restbed/detail/http_impl.cpp.s
+
 source/corvusoft/restbed/detail/service_impl.o: source/corvusoft/restbed/detail/service_impl.cpp.o
 
 .PHONY : source/corvusoft/restbed/detail/service_impl.o
@@ -585,6 +612,9 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... edit_cache"
+	@echo "... source/corvusoft/restbed/detail/http_impl.o"
+	@echo "... source/corvusoft/restbed/detail/http_impl.i"
+	@echo "... source/corvusoft/restbed/detail/http_impl.s"
 	@echo "... source/corvusoft/restbed/detail/service_impl.o"
 	@echo "... source/corvusoft/restbed/detail/service_impl.i"
 	@echo "... source/corvusoft/restbed/detail/service_impl.s"

@@ -177,9 +177,57 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o.provides: CMakeFil
 CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o
 
 
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o: CMakeFiles/restbed.dir/flags.make
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o: ../source/corvusoft/restbed/service.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o -c /root/restbed/source/corvusoft/restbed/service.cpp
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/service.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/service.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires:
+
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides.build
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o
+
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o: CMakeFiles/restbed.dir/flags.make
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o: ../source/corvusoft/restbed/session.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o -c /root/restbed/source/corvusoft/restbed/session.cpp
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/session.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/session.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires:
+
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides.build
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o
+
+
 CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o: ../source/corvusoft/restbed/resource.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o -c /root/restbed/source/corvusoft/restbed/resource.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.i: cmake_force
@@ -203,7 +251,7 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o.provides.build: C
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o: ../source/corvusoft/restbed/response.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o -c /root/restbed/source/corvusoft/restbed/response.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.i: cmake_force
@@ -227,7 +275,7 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o.provides.build: C
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o: ../source/corvusoft/restbed/settings.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o -c /root/restbed/source/corvusoft/restbed/settings.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.i: cmake_force
@@ -251,7 +299,7 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o.provides.build: C
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o: ../source/corvusoft/restbed/ssl_settings.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o -c /root/restbed/source/corvusoft/restbed/ssl_settings.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.i: cmake_force
@@ -273,105 +321,9 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o.provides: CMa
 CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o
 
 
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o: CMakeFiles/restbed.dir/flags.make
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o: ../source/corvusoft/restbed/service.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o -c /root/restbed/source/corvusoft/restbed/service.cpp
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/service.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.i
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/service.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.s
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires:
-
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
-	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides.build
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o
-
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o: ../source/corvusoft/restbed/detail/service_impl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires:
-
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
-	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides.build
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o
-
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o: CMakeFiles/restbed.dir/flags.make
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o: ../source/corvusoft/restbed/session.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o -c /root/restbed/source/corvusoft/restbed/session.cpp
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/session.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.i
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/session.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.s
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires:
-
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
-	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides.build
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o
-
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o: ../source/corvusoft/restbed/detail/session_impl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires:
-
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
-	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides.build
-.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides
-
-CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o
-
-
 CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o: ../source/corvusoft/restbed/session_manager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o -c /root/restbed/source/corvusoft/restbed/session_manager.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.i: cmake_force
@@ -393,9 +345,33 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o.provides: 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o
 
 
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o: ../source/corvusoft/restbed/detail/http_impl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/http_impl.cpp
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/detail/http_impl.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.i
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/detail/http_impl.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.s
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.requires:
+
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.requires
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.requires
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.provides.build
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.provides
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o
+
+
 CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
 CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o: ../source/corvusoft/restbed/detail/socket_impl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/socket_impl.cpp
 
 CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.i: cmake_force
@@ -417,6 +393,54 @@ CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o.provide
 CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o
 
 
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o: ../source/corvusoft/restbed/detail/service_impl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.i
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/detail/service_impl.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.s
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires:
+
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides.build
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o
+
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o: CMakeFiles/restbed.dir/flags.make
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o: ../source/corvusoft/restbed/detail/session_impl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o -c /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp > CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.i
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /root/restbed/source/corvusoft/restbed/detail/session_impl.cpp -o CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.s
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires:
+
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
+	$(MAKE) -f CMakeFiles/restbed.dir/build.make CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides.build
+.PHONY : CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides
+
+CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.provides.build: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o
+
+
 # Object files for target restbed
 restbed_OBJECTS = \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/uri.cpp.o" \
@@ -424,16 +448,17 @@ restbed_OBJECTS = \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/http.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/string.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o" \
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o" \
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o" \
-"CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o" \
-"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o" \
-"CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o" \
-"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o" \
 "CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o" \
-"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o"
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o" \
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o" \
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o" \
+"CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o"
 
 # External object files for target restbed
 restbed_EXTERNAL_OBJECTS =
@@ -443,19 +468,20 @@ librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/rule.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/http.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/string.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o
+librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o
+librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o
-librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o
-librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o
-librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o
-librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o
+librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o
+librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o
+librestbed.a: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o
 librestbed.a: CMakeFiles/restbed.dir/build.make
 librestbed.a: CMakeFiles/restbed.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX static library librestbed.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/restbed/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX static library librestbed.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/restbed.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/restbed.dir/link.txt --verbose=$(VERBOSE)
 
@@ -469,16 +495,17 @@ CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/http.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/string.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/request.cpp.o.requires
+CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
+CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/resource.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/response.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/settings.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/ssl_settings.cpp.o.requires
-CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/service.cpp.o.requires
-CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
-CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/session.cpp.o.requires
-CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/session_manager.cpp.o.requires
+CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/http_impl.cpp.o.requires
 CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/socket_impl.cpp.o.requires
+CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/service_impl.cpp.o.requires
+CMakeFiles/restbed.dir/requires: CMakeFiles/restbed.dir/source/corvusoft/restbed/detail/session_impl.cpp.o.requires
 
 .PHONY : CMakeFiles/restbed.dir/requires
 
