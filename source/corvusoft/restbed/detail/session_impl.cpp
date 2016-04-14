@@ -164,7 +164,7 @@ namespace restbed
             std::shared_ptr<std::string> temp_content(new std::string( payload.get_body().begin( ), payload.get_body().end( ) ));
             std::cout<<*temp_content<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
         } 
-        catch ( const bad_alloc& e ) 
+        catch ( const std::bad_alloc& e ) 
         {
             std::cout<<e.what()<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
         }
