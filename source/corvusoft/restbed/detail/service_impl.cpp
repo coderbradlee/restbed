@@ -32,7 +32,14 @@
 #include "corvusoft/restbed/detail/rule_engine_impl.hpp"
 
 //External Includes
+#include <boost/asio/error.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/buffer.hpp>
+#include <boost/asio/streambuf.hpp>
 
+#ifdef BUILD_SSL
+    #include <boost/asio/ssl.hpp>
+#endif
 //System Namespaces
 using std::set;
 using std::map;
