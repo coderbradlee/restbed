@@ -28,7 +28,7 @@
 #ifdef BUILD_SSL
     #include <asio/ssl.hpp>
 #endif
-
+using boost;
 //System Namespaces
 using std::bind;
 using std::stod;
