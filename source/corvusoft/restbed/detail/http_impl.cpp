@@ -56,6 +56,48 @@ using boost::asio::io_service;
     using boost::asio::ssl::stream;
 #endif
 using boost::system::error_code;
+
+
+
+#include<boost/shared_ptr.hpp>
+//Project Includes
+#include "corvusoft/restbed/uri.hpp"
+#include "corvusoft/restbed/http.hpp"
+#include "corvusoft/restbed/string.hpp"
+#include "corvusoft/restbed/request.hpp"
+#include "corvusoft/restbed/response.hpp"
+#include "corvusoft/restbed/ssl_settings.hpp"
+#include "corvusoft/restbed/detail/socket_impl.hpp"
+#include "corvusoft/restbed/detail/request_impl.hpp"
+#include "corvusoft/restbed/detail/response_impl.hpp"
+
+//External Includes
+#include <boost/asio.hpp>
+
+//System Namespaces
+using std::stoi;
+using std::stod;
+using std::regex;
+using std::string;
+using std::smatch;
+using std::istream;
+using std::multimap;
+using std::to_string;
+using std::shared_ptr;
+using std::make_shared;
+using std::runtime_error;
+
+//Project Namespaces
+using restbed::detail::SocketImpl;
+using restbed::detail::RequestImpl;
+using restbed::detail::ResponseImpl;
+
+//External Namespaces
+using boost::asio::buffer;
+using boost::asio::ip::tcp;
+using namespace boost;
+
+
 namespace restbed
 {
     namespace detail
