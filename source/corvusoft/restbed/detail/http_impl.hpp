@@ -15,7 +15,14 @@
 #include <corvusoft/restbed/byte.hpp>
 
 //External Includes
+#include <boost/asio/error.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/buffer.hpp>
+#include <boost/asio/streambuf.hpp>
 
+#ifdef BUILD_SSL
+    #include <boost/asio/ssl.hpp>
+#endif
 //System Namespaces
 
 //Project Namespaces
