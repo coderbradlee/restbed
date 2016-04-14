@@ -24,8 +24,8 @@
 #include "corvusoft/restbed/detail/response_impl.hpp"
 
 //External Includes
-#include <asio/error.hpp>
-#include <asio/buffer.hpp>
+#include <boost/asio/error.hpp>
+#include <boost/asio/buffer.hpp>
 
 //System Namespaces
 using std::bind;
@@ -47,7 +47,7 @@ using restbed::detail::RequestImpl;
 using restbed::detail::ResponseImpl;
 
 //External Namespaces
-using asio::buffer;
+using boost::asio::buffer;
 
 namespace restbed
 {
@@ -216,23 +216,23 @@ namespace restbed
         
         if ( length > request->m_pimpl->m_buffer->size( ) )
         {
-            error_code error;
+            boost::system::error_code error;
             const size_t size = length - request->m_pimpl->m_buffer->size( );
             
             request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, size, error );
             
-            if ( error and error not_eq asio::error::eof )
+            if ( error and error not_eq boost::asio::error::eof )
             {
                 throw runtime_error( String::format( "Socket receive failed: '%s'", error.message( ).data( ) ) );
             }
             
-            const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+            const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
             data = Bytes( data_ptr, data_ptr + length );
             request->m_pimpl->m_buffer->consume( length );
         }
         else
         {
-            const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+            const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
             data = Bytes( data_ptr, data_ptr + length );
             request->m_pimpl->m_buffer->consume( length );
         }
@@ -265,7 +265,7 @@ namespace restbed
             throw invalid_argument( String::empty );
         }
         
-        error_code error;
+        boost::system::error_code error;
         const size_t size = request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, delimiter, error );
         
         if ( error )
@@ -273,7 +273,7 @@ namespace restbed
             throw runtime_error( String::format( "Socket receive failed: '%s'", error.message( ).data( ) ) );
         }
         
-        const auto data_ptr = asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
+        const auto data_ptr = boost::asio::buffer_cast< const Byte* >( request->m_pimpl->m_buffer->data( ) );
         const Bytes data( data_ptr, data_ptr + size );
         request->m_pimpl->m_buffer->consume( size );
         

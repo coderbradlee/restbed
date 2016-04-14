@@ -42,7 +42,7 @@ using std::exception;
 using std::to_string;
 using std::ssub_match;
 using std::shared_ptr;
-using std::error_code;
+using boost::system::error_code;
 using std::make_shared;
 using std::regex_match;
 using std::regex_error;
@@ -56,8 +56,8 @@ using std::chrono::milliseconds;
 using restbed::detail::SessionImpl;
 
 //External Namespaces
-using asio::buffer;
-using asio::streambuf;
+using boost::asio::buffer;
+using boost::asio::streambuf;
 
 namespace restbed
 {
@@ -83,7 +83,7 @@ namespace restbed
 
         void SessionImpl::fetch_body( const size_t length, const shared_ptr< Session > session, const function< void ( const shared_ptr< Session >, const Bytes& ) >& callback ) const
         {
-            const auto data_ptr = asio::buffer_cast< const Byte* >( session->m_pimpl->m_request->m_pimpl->m_buffer->data( ) );
+            const auto data_ptr = boost::asio::buffer_cast< const Byte* >( session->m_pimpl->m_request->m_pimpl->m_buffer->data( ) );
             const auto data = Bytes( data_ptr, data_ptr + length );
             session->m_pimpl->m_request->m_pimpl->m_buffer->consume( length );
 
@@ -101,7 +101,7 @@ namespace restbed
             callback( session, data );
         }
 
-        void SessionImpl::transmit( const Response& response, const function< void ( const error_code&, size_t ) >& callback ) const
+        void SessionImpl::transmit( const Response& response, const function< void ( const boost::system::error_code&, size_t ) >& callback ) const
         {
             auto hdrs = m_settings->get_default_headers( );
 

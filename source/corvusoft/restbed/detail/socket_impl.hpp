@@ -17,12 +17,12 @@
 #include "corvusoft/restbed/byte.hpp"
 
 //External Includes
-#include <asio/ip/tcp.hpp>
-#include <asio/streambuf.hpp>
-#include <asio/steady_timer.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/streambuf.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 #ifdef BUILD_SSL
-    #include <asio/ssl.hpp>
+    #include <boost/asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -48,9 +48,9 @@ namespace restbed
                 //Definitions
                 
                 //Constructors
-                SocketImpl( const std::shared_ptr< asio::ip::tcp::socket >& socket, const std::shared_ptr< Logger >& logger = nullptr );
+                SocketImpl( const std::shared_ptr< boost::asio::ip::tcp::socket >& socket, const std::shared_ptr< Logger >& logger = nullptr );
 #ifdef BUILD_SSL
-                SocketImpl( const std::shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > >& socket, const std::shared_ptr< Logger >& logger = nullptr );
+                SocketImpl( const std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >& socket, const std::shared_ptr< Logger >& logger = nullptr );
 #endif
                 virtual ~SocketImpl( void );
                 
@@ -61,19 +61,19 @@ namespace restbed
                 
                 bool is_closed( void ) const;
                 
-                void connect(  const std::string& hostname, const uint16_t port, const std::function< void ( const std::error_code& ) >& callback );
+                void connect(  const std::string& hostname, const uint16_t port, const std::function< void ( const boost::system::error_code& ) >& callback );
                 
-                void sleep_for( const std::chrono::milliseconds& delay, const std::function< void ( const std::error_code& ) >& callback );
+                void sleep_for( const std::chrono::milliseconds& delay, const std::function< void ( const boost::system::error_code& ) >& callback );
                 
-                void write( const Bytes& data, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
+                void write( const Bytes& data, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
                 
-                size_t read( const std::shared_ptr< asio::streambuf >& data, const std::size_t length, std::error_code& error );
+                size_t read( const std::shared_ptr< boost::asio::streambuf >& data, const std::size_t length, boost::system::error_code& error );
                 
-                void read( const std::shared_ptr< asio::streambuf >& data, const std::size_t length, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
+                void read( const std::shared_ptr< boost::asio::streambuf >& data, const std::size_t length, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
                 
-                size_t read( const std::shared_ptr< asio::streambuf >& data, const std::string& delimiter, std::error_code& error );
+                size_t read( const std::shared_ptr< boost::asio::streambuf >& data, const std::string& delimiter, boost::system::error_code& error );
                 
-                void read( const std::shared_ptr< asio::streambuf >& data, const std::string& delimiter, const std::function< void ( const std::error_code&, std::size_t ) >& callback );
+                void read( const std::shared_ptr< boost::asio::streambuf >& data, const std::string& delimiter, const std::function< void ( const boost::system::error_code&, std::size_t ) >& callback );
                 
                 //Getters
                 std::string get_local_endpoint( void );
@@ -113,7 +113,7 @@ namespace restbed
                 SocketImpl( const SocketImpl& original ) = delete;
                 
                 //Functionality
-                void connection_timeout_handler( const std::error_code& error );
+                void connection_timeout_handler( const boost::system::error_code& error );
                 
                 //Getters
                 
@@ -131,13 +131,13 @@ namespace restbed
                 
                 std::chrono::milliseconds m_timeout;
                 
-                std::shared_ptr< asio::steady_timer > m_timer;
+                std::shared_ptr< boost::asio::steady_timer > m_timer;
                 
-                std::shared_ptr< asio::ip::tcp::resolver > m_resolver;
+                std::shared_ptr< boost::asio::ip::tcp::resolver > m_resolver;
                 
-                std::shared_ptr< asio::ip::tcp::socket > m_socket;
+                std::shared_ptr< boost::asio::ip::tcp::socket > m_socket;
 #ifdef BUILD_SSL
-                std::shared_ptr< asio::ssl::stream< asio::ip::tcp::socket > > m_ssl_socket;
+                std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > > m_ssl_socket;
 #endif
         };
     }

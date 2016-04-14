@@ -17,7 +17,7 @@
 #include "corvusoft/restbed/detail/session_impl.hpp"
 
 //External Includes
-#include <asio/buffer.hpp>
+#include <boost/asio/buffer.hpp>
 
 //System Namespaces
 using std::set;
@@ -37,7 +37,7 @@ using std::chrono::milliseconds;
 using restbed::detail::SessionImpl;
 
 //External Namespaces
-using asio::buffer;
+using boost::asio::buffer;
 
 namespace restbed
 {
@@ -102,7 +102,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Close failed: session already closed." ), session );
         }
         
-        m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session ]( const error_code & error, size_t )
+        m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session ]( const boost::system::error_code & error, size_t )
         {
             if ( error )
             {
@@ -128,7 +128,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Close failed: session already closed." ), session );
         }
         
-        m_pimpl->transmit( response, [ this, session ]( const error_code & error, size_t )
+        m_pimpl->transmit( response, [ this, session ]( const boost::system::error_code & error, size_t )
         {
             if ( error )
             {
@@ -191,7 +191,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Yield failed: session already closed." ), session );
         }
         
-        m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session, callback ]( const error_code & error, size_t )
+        m_pimpl->m_request->m_pimpl->m_socket->write( body, [ this, session, callback ]( const boost::system::error_code & error, size_t )
         {
             if ( error )
             {
@@ -219,7 +219,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Yield failed: session already closed." ), session );
         }
         
-        m_pimpl->transmit( response, [ this, session, callback ]( const error_code & error, size_t )
+        m_pimpl->transmit( response, [ this, session, callback ]( const boost::system::error_code & error, size_t )
         {
             if ( error )
             {
@@ -230,8 +230,8 @@ namespace restbed
             
             if ( callback == nullptr )
             {
-                m_pimpl->m_request->m_pimpl->m_buffer = make_shared< asio::streambuf >( );
-                m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, "\r\n\r\n", [ this, session ]( const error_code & error, const size_t length )
+                m_pimpl->m_request->m_pimpl->m_buffer = make_shared< boost::asio::streambuf >( );
+                m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, "\r\n\r\n", [ this, session ]( const boost::system::error_code & error, const size_t length )
                 {
                     m_pimpl->m_keep_alive_callback( error, length, session );
                 } );
@@ -289,7 +289,7 @@ namespace restbed
         {
             size_t size = length - m_pimpl->m_request->m_pimpl->m_buffer->size( );
             
-            m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, size, [ this, session, length, callback ]( const error_code & error, size_t )
+            m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, size, [ this, session, length, callback ]( const boost::system::error_code & error, size_t )
             {
                 if ( error )
                 {
@@ -317,7 +317,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Fetch failed: session already closed." ), session );
         }
         
-        m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, delimiter, [ this, session, callback ]( const error_code & error, size_t length )
+        m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, delimiter, [ this, session, callback ]( const boost::system::error_code & error, size_t length )
         {
             if ( error )
             {
@@ -340,7 +340,7 @@ namespace restbed
             return error_handler( 500, runtime_error( "Sleep failed: session already closed." ), session );
         }
         
-        m_pimpl->m_request->m_pimpl->m_socket->sleep_for( delay, [ delay, session, callback, this ]( const error_code & error )
+        m_pimpl->m_request->m_pimpl->m_socket->sleep_for( delay, [ delay, session, callback, this ]( const boost::system::error_code & error )
         {
             if ( error )
             {
