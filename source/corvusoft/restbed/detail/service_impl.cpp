@@ -74,7 +74,7 @@ using boost::asio::io_service;
 using boost::asio::signal_set;
 using boost::asio::ip::address;
 using boost::asio::socket_base;
-using boost::asio::system_error;
+using boost::system::error_code;
 
 namespace restbed
 {
