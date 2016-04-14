@@ -26,11 +26,11 @@
 #include "corvusoft/restbed/detail/resource_impl.hpp"
 
 //External Includes
-#include <asio/io_service.hpp>
-#include <asio/steady_timer.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 #ifdef BUILD_SSL
-    #include <asio/ssl.hpp>
+    #include <boost/asio/ssl.hpp>
 #endif
 
 //System Namespaces
@@ -54,8 +54,8 @@ using std::chrono::milliseconds;
 using restbed::detail::ServiceImpl;
 
 //External Namespaces
-using asio::io_service;
-using asio::steady_timer;
+using boost::asio::io_service;
+using boost::asio::steady_timer;
 
 namespace restbed
 {

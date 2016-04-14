@@ -62,12 +62,12 @@ using std::regex_constants::icase;
 //Project Namespaces
 
 //External Namespaces
-using asio::ip::tcp;
-using asio::io_service;
-using asio::signal_set;
-using asio::ip::address;
-using asio::socket_base;
-using asio::system_error;
+using boost::asio::ip::tcp;
+using boost::asio::io_service;
+using boost::asio::signal_set;
+using boost::asio::ip::address;
+using boost::asio::socket_base;
+using boost::asio::system_error;
 
 namespace restbed
 {
@@ -182,11 +182,11 @@ namespace restbed
         {
             if ( m_ssl_settings not_eq nullptr )
             {
-                m_ssl_context = make_shared< asio::ssl::context >( asio::ssl::context::sslv23 );
+                m_ssl_context = make_shared< boost::asio::ssl::context >( boost::asio::ssl::context::sslv23 );
                 m_ssl_context->set_default_verify_paths( );
                 
                 auto passphrase = m_ssl_settings->get_passphrase( );
-                m_ssl_context->set_password_callback( [ passphrase ]( size_t, asio::ssl::context::password_purpose )
+                m_ssl_context->set_password_callback( [ passphrase ]( size_t, boost::asio::ssl::context::password_purpose )
                 {
                     return passphrase;
                 } );
@@ -216,32 +216,32 @@ namespace restbed
                 
                 if ( not filename.empty( ) )
                 {
-                    m_ssl_context->use_certificate_file( filename, asio::ssl::context::pem );
+                    m_ssl_context->use_certificate_file( filename, boost::asio::ssl::context::pem );
                 }
                 
                 filename = m_ssl_settings->get_private_key( );
                 
                 if ( not filename.empty( ) )
                 {
-                    m_ssl_context->use_private_key_file( filename, asio::ssl::context::pem );
+                    m_ssl_context->use_private_key_file( filename, boost::asio::ssl::context::pem );
                 }
                 
                 filename = m_ssl_settings->get_private_rsa_key( );
                 
                 if ( not filename.empty( ) )
                 {
-                    m_ssl_context->use_rsa_private_key_file( filename, asio::ssl::context::pem );
+                    m_ssl_context->use_rsa_private_key_file( filename, boost::asio::ssl::context::pem );
                 }
                 
-                asio::ssl::context::options options = 0;
-                options = ( m_ssl_settings->has_enabled_tlsv1( ) ) ? options : options | asio::ssl::context::no_tlsv1;
-                options = ( m_ssl_settings->has_enabled_sslv2( ) ) ? options : options | asio::ssl::context::no_sslv2;
-                options = ( m_ssl_settings->has_enabled_sslv3( ) ) ? options : options | asio::ssl::context::no_sslv3;
-                options = ( m_ssl_settings->has_enabled_tlsv11( ) ) ? options : options | asio::ssl::context::no_tlsv1_1;
-                options = ( m_ssl_settings->has_enabled_tlsv12( ) ) ? options : options | asio::ssl::context::no_tlsv1_2;
-                options = ( m_ssl_settings->has_enabled_compression( ) ) ? options : options | asio::ssl::context::no_compression;
-                options = ( m_ssl_settings->has_enabled_default_workarounds( ) ) ? options | asio::ssl::context::default_workarounds : options;
-                options = ( m_ssl_settings->has_enabled_single_diffie_hellman_use( ) ) ? options | asio::ssl::context::single_dh_use : options;
+                boost::asio::ssl::context::options options = 0;
+                options = ( m_ssl_settings->has_enabled_tlsv1( ) ) ? options : options | boost::asio::ssl::context::no_tlsv1;
+                options = ( m_ssl_settings->has_enabled_sslv2( ) ) ? options : options | boost::asio::ssl::context::no_sslv2;
+                options = ( m_ssl_settings->has_enabled_sslv3( ) ) ? options : options | boost::asio::ssl::context::no_sslv3;
+                options = ( m_ssl_settings->has_enabled_tlsv11( ) ) ? options : options | boost::asio::ssl::context::no_tlsv1_1;
+                options = ( m_ssl_settings->has_enabled_tlsv12( ) ) ? options : options | boost::asio::ssl::context::no_tlsv1_2;
+                options = ( m_ssl_settings->has_enabled_compression( ) ) ? options : options | boost::asio::ssl::context::no_compression;
+                options = ( m_ssl_settings->has_enabled_default_workarounds( ) ) ? options | boost::asio::ssl::context::default_workarounds : options;
+                options = ( m_ssl_settings->has_enabled_single_diffie_hellman_use( ) ) ? options | boost::asio::ssl::context::single_dh_use : options;
                 m_ssl_context->set_options( options );
                 
                 if ( not m_ssl_settings->get_bind_address( ).empty( ) )
@@ -266,15 +266,15 @@ namespace restbed
         
         void ServiceImpl::https_listen( void ) const
         {
-            auto socket = make_shared< asio::ssl::stream< tcp::socket > >( m_ssl_acceptor->get_io_service( ), *m_ssl_context );
+            auto socket = make_shared< boost::asio::ssl::stream< tcp::socket > >( m_ssl_acceptor->get_io_service( ), *m_ssl_context );
             m_ssl_acceptor->async_accept( socket->lowest_layer( ), bind( &ServiceImpl::create_ssl_session, this, socket, _1 ) );
         }
         
-        void ServiceImpl::create_ssl_session( const shared_ptr< asio::ssl::stream< tcp::socket > >& socket, const error_code& error ) const
+        void ServiceImpl::create_ssl_session( const shared_ptr< boost::asio::ssl::stream< tcp::socket > >& socket, const error_code& error ) const
         {
             if ( not error )
             {
-                socket->async_handshake( asio::ssl::stream_base::server, [ this, socket ]( const error_code & error )
+                socket->async_handshake( boost::asio::ssl::stream_base::server, [ this, socket ]( const error_code & error )
                 {
                     if ( error )
                     {
@@ -292,7 +292,7 @@ namespace restbed
                         session->m_pimpl->m_error_handler = m_error_handler;
                         session->m_pimpl->m_request = make_shared< Request >( );
                         session->m_pimpl->m_request->m_pimpl->m_socket = connection;
-                        session->m_pimpl->m_request->m_pimpl->m_buffer = make_shared< asio::streambuf >( );
+                        session->m_pimpl->m_request->m_pimpl->m_buffer = make_shared< boost::asio::streambuf >( );
                         session->m_pimpl->m_keep_alive_callback = bind( &ServiceImpl::parse_request, this, _1, _2, _3 );
                         session->m_pimpl->m_request->m_pimpl->m_socket->read( session->m_pimpl->m_request->m_pimpl->m_buffer, "\r\n\r\n", bind( &ServiceImpl::parse_request, this, _1, _2, session ) );
                     } );
@@ -526,7 +526,7 @@ namespace restbed
                     session->m_pimpl->m_error_handler = m_error_handler;
                     session->m_pimpl->m_request = make_shared< Request >( );
                     session->m_pimpl->m_request->m_pimpl->m_socket = connection;
-                    session->m_pimpl->m_request->m_pimpl->m_buffer = make_shared< asio::streambuf >( );
+                    session->m_pimpl->m_request->m_pimpl->m_buffer = make_shared< boost::asio::streambuf >( );
                     session->m_pimpl->m_keep_alive_callback = bind( &ServiceImpl::parse_request, this, _1, _2, _3 );
                     session->m_pimpl->m_request->m_pimpl->m_socket->read( session->m_pimpl->m_request->m_pimpl->m_buffer, "\r\n\r\n", bind( &ServiceImpl::parse_request, this, _1, _2, session ) );
                 } );

@@ -17,7 +17,7 @@
 #include "corvusoft/restbed/detail/session_impl.hpp"
 
 //External Includes
-#include <asio/buffer.hpp>
+#include <boost/asio/buffer.hpp>
 
 //System Namespaces
 using std::set;
@@ -37,7 +37,7 @@ using std::chrono::milliseconds;
 using restbed::detail::SessionImpl;
 
 //External Namespaces
-using asio::buffer;
+using boost::asio::buffer;
 
 namespace restbed
 {
@@ -230,7 +230,7 @@ namespace restbed
             
             if ( callback == nullptr )
             {
-                m_pimpl->m_request->m_pimpl->m_buffer = make_shared< asio::streambuf >( );
+                m_pimpl->m_request->m_pimpl->m_buffer = make_shared< boost::asio::streambuf >( );
                 m_pimpl->m_request->m_pimpl->m_socket->read( m_pimpl->m_request->m_pimpl->m_buffer, "\r\n\r\n", [ this, session ]( const error_code & error, const size_t length )
                 {
                     m_pimpl->m_keep_alive_callback( error, length, session );
