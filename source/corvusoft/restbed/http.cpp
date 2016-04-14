@@ -32,7 +32,7 @@ using std::bind;
 using std::string;
 using std::future;
 using std::function;
-using std::error_code;
+//using std::error_code;
 using std::shared_ptr;
 using std::make_shared;
 using std::runtime_error;
