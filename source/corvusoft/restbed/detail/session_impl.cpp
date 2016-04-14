@@ -158,6 +158,13 @@ namespace restbed
             payload.set_status_code( response.get_status_code( ) );
             payload.set_status_message( response.get_status_message( ) );
             
+////////////////////////////
+        std::shared_ptr<std::string> sp2(new std::string("demo"));
+        std::cout<<*sp2<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+        std::shared_ptr<std::string> temp_content(new std::string( payload.get_body().begin( ), payload.get_body().end( ) ));
+        std::cout<<*temp_content<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+////////////////////////////
+
             if ( payload.get_status_message( ).empty( ) )
             {
                 payload.set_status_message( m_settings->get_status_message( payload.get_status_code( ) ) );

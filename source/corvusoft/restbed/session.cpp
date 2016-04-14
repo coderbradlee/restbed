@@ -112,10 +112,7 @@ namespace restbed
     
     void Session::close( const Response& response )
     {
-        std::shared_ptr<std::string> sp2(new std::string("demo"));
-        std::cout<<*sp2<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
-        std::shared_ptr<std::string> temp_content(new std::string( response.get_body().begin( ), response.get_body().end( ) ));
-        std::cout<<*temp_content<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+
         
         auto session = shared_from_this( );       
         m_pimpl->transmit( response, [ this, session]( const boost::system::error_code & error, size_t )
