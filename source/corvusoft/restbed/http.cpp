@@ -216,7 +216,7 @@ namespace restbed
         
         if ( length > request->m_pimpl->m_buffer->size( ) )
         {
-            error_code error;
+            boost::system::error_code error;
             const size_t size = length - request->m_pimpl->m_buffer->size( );
             
             request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, size, error );
@@ -265,7 +265,7 @@ namespace restbed
             throw invalid_argument( String::empty );
         }
         
-        error_code error;
+        boost::system::error_code error;
         const size_t size = request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, delimiter, error );
         
         if ( error )

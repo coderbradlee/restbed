@@ -179,7 +179,7 @@ namespace restbed
             request->m_pimpl->m_socket = make_shared< SocketImpl >( socket );
         }
 #endif
-        void HttpImpl::request_handler( const error_code& error, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback   )
+        void HttpImpl::request_handler( const boost::system::error_code& error, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback   )
         {
             if ( error )
             {
@@ -190,7 +190,7 @@ namespace restbed
             request->m_pimpl->m_socket->write( to_bytes( request ), bind( write_handler, _1, _2, request, callback ) );
         }
         
-        void HttpImpl::write_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::write_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
             if ( error )
             {
@@ -216,7 +216,7 @@ namespace restbed
             return response;
         }
         
-        void HttpImpl::read_status_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::read_status_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
             if ( error )
             {
@@ -246,7 +246,7 @@ namespace restbed
             request->m_pimpl->m_socket->read( request->m_pimpl->m_buffer, "\r\n\r\n", bind( read_headers_handler, _1, _2, request, callback ) );
         }
         
-        void HttpImpl::read_headers_handler( const error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
+        void HttpImpl::read_headers_handler( const boost::system::error_code& error, const size_t, const shared_ptr< Request >& request, const function< void ( const shared_ptr< Request >, const shared_ptr< Response > ) >& callback )
         {
             if ( error == boost::asio::error::eof )
             {

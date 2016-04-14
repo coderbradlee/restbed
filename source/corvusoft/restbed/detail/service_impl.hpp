@@ -70,11 +70,11 @@ namespace restbed
                 
                 void https_listen( void ) const;
                 
-                void create_ssl_session( const std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >& socket, const std::error_code& error ) const;
+                void create_ssl_session( const std::shared_ptr< boost::asio::ssl::stream< boost::asio::ip::tcp::socket > >& socket, const boost::system::error_code& error ) const;
 #endif
                 void setup_signal_handler( );
                 
-                void signal_handler( const std::error_code& error, const int signal_number ) const;
+                void signal_handler( const boost::system::error_code& error, const int signal_number ) const;
                 
                 std::string sanitise_path( const std::string& path ) const;
                 
@@ -92,7 +92,7 @@ namespace restbed
                 
                 void router( const std::shared_ptr< Session > session ) const;
                 
-                void create_session( const std::shared_ptr< boost::asio::ip::tcp::socket >& socket, const std::error_code& error ) const;
+                void create_session( const std::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::system::error_code& error ) const;
                 
                 void extract_path_parameters( const std::string& sanitised_path, const std::shared_ptr< const Request >& request ) const;
                 
@@ -108,7 +108,7 @@ namespace restbed
                 
                 static const std::multimap< std::string, std::string > parse_request_headers( std::istream& stream );
                 
-                void parse_request( const std::error_code& error, std::size_t length, const std::shared_ptr< Session > session ) const;
+                void parse_request( const boost::system::error_code& error, std::size_t length, const std::shared_ptr< Session > session ) const;
                 
                 //Getters
                 const std::shared_ptr< const Uri > get_http_uri( void ) const;

@@ -297,7 +297,7 @@ namespace restbed
         
         auto timer = make_shared< steady_timer >( *m_pimpl->m_io_service );
         timer->expires_from_now( interval );
-        timer->async_wait( [ this, task, interval, timer ]( const error_code& )
+        timer->async_wait( [ this, task, interval, timer ]( const boost::system::error_code& )
         {
             task( );
             schedule( task, interval );

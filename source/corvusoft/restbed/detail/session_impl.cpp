@@ -101,7 +101,7 @@ namespace restbed
             callback( session, data );
         }
 
-        void SessionImpl::transmit( const Response& response, const function< void ( const error_code&, size_t ) >& callback ) const
+        void SessionImpl::transmit( const Response& response, const function< void ( const boost::system::error_code&, size_t ) >& callback ) const
         {
             auto hdrs = m_settings->get_default_headers( );
 
