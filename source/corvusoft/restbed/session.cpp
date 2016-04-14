@@ -112,12 +112,13 @@ namespace restbed
     
     void Session::close( const Response& response )
     {
-        auto session = shared_from_this( );
+        const std::string temp_content( response.get_body().begin( ), response.get_body().end( ) );
+        std::cout<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
         
-        m_pimpl->transmit( response, [ this, session,response ]( const boost::system::error_code & error, size_t )
+        auto session = shared_from_this( );       
+        m_pimpl->transmit( response, [ this, session]( const boost::system::error_code & error, size_t )
         {
-            const std::string temp_content( response.get_body().begin( ), response.get_body().end( ) );
-            std::cout<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+            
         
         
             if ( error )
