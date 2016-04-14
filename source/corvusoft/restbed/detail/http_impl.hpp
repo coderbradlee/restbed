@@ -21,7 +21,7 @@
 //Project Namespaces
 
 //External Namespaces
-
+using boost::system::error_code;
 namespace restbed
 {
     //Fordward Declarations
